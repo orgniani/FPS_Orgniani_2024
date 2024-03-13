@@ -1,5 +1,4 @@
 using UnityEngine;
-using Input = UnityEngine.Input;
 
 [RequireComponent(typeof(CharacterController))]
 public class FirstPersonController : MonoBehaviour
@@ -58,8 +57,18 @@ public class FirstPersonController : MonoBehaviour
 	{
 		controller = GetComponent<CharacterController>();
 		characterTargetRot = transform.localRotation;
+
+		if(!look)
+		{
+            Debug.LogError($"{name}: Camera Pivot Point not assigned!");
+            Debug.LogError($"Disabling component");
+            enabled = false;
+        }
+
+		else
 		cameraTargetRot = look.localRotation;
 	}
+
 	private void Update()
 	{		
         GroundedCheck();

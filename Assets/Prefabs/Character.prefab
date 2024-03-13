@@ -212,7 +212,8 @@ GameObject:
   - component: {fileID: 828383375169964641}
   - component: {fileID: 1356618059398162663}
   - component: {fileID: 418985633218248879}
-  - component: {fileID: 7217324167200542232}
+  - component: {fileID: 927451569278932637}
+  - component: {fileID: 1934332627433507449}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -278,7 +279,7 @@ MonoBehaviour:
   look: {fileID: 2926193183142937477}
   moveSpeed: 4
   sprintSpeed: 8
-  rotationSpeed: 1
+  rotationSpeed: 0.5
   jumpHeight: 1.2
   gravity: -15
   terminalVelocity: 53
@@ -287,10 +288,10 @@ MonoBehaviour:
   groundedRadius: 0.5
   groundLayers:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 64
   minCameraAngle: -90
   maxCameraAngle: 90
---- !u!114 &7217324167200542232
+--- !u!114 &927451569278932637
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -299,14 +300,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 6220971133945251773}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca3d7bb944d696b438ae2f52b660caf3, type: 3}
+  m_Script: {fileID: 11500000, guid: 48b7b020242fc0b4fabe6710fef7910b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemies:
     serializedVersion: 2
-    m_Bits: 64
-  offset: {x: 0, y: 0, z: 0}
+    m_Bits: 128
+  offset: {x: 0, y: -0.5, z: 0}
   gunDamage: 10
+--- !u!114 &1934332627433507449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6220971133945251773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9881ab8a589d9e4aa68a5b3c2ddce13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
 --- !u!1 &8077575949028114568
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,12 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class InputReader : MonoBehaviour
 {
     [SerializeField] private FirstPersonController playerController;
-    [SerializeField] private PlayerCombat playerCombat;
+    [SerializeField] private CharacterShooting characterShooting;
+
+    private void Start()
+    {
+        if(!playerController)
+        {
+            Debug.LogError($"{name}: FirstPersonController is null!");
+            Debug.LogError($"Disabling component");
+            gameObject.SetActive(false);
+        }
+
+        else if(!characterShooting )
+        {
+            Debug.LogError($"{name}: CharacterShooting is null!");
+            Debug.LogError($"Disabling component");
+            gameObject.SetActive(false);
+        }
+    }
 
     public void SetMovementValue(InputAction.CallbackContext inputContext)
     {
@@ -44,11 +59,9 @@ public class InputReader : MonoBehaviour
 
     public void Shoot(InputAction.CallbackContext inputContext)
     {
-        if (!playerCombat) return;
-
         if (inputContext.started)
         {
-            playerCombat.Shoot();
+            characterShooting.Shoot();
         }
     }
 }

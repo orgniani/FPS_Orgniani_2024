@@ -236,14 +236,9 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 418985633218248879, guid: 29a45275470350343b031981db27eb97,
         type: 3}
-      propertyPath: rotationSpeed
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 418985633218248879, guid: 29a45275470350343b031981db27eb97,
-        type: 3}
-      propertyPath: groundLayers.m_Bits
-      value: 64
-      objectReference: {fileID: 0}
+      propertyPath: look
+      value: 
+      objectReference: {fileID: 191476997}
     - target: {fileID: 828383375169964641, guid: 29a45275470350343b031981db27eb97,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -298,16 +293,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 7217324167200542232, guid: 29a45275470350343b031981db27eb97,
-        type: 3}
-      propertyPath: offset.y
-      value: -0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7217324167200542232, guid: 29a45275470350343b031981db27eb97,
-        type: 3}
-      propertyPath: enemies.m_Bits
-      value: 128
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -421,6 +406,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 142645310}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &191476997 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2926193183142937477, guid: 29a45275470350343b031981db27eb97,
+    type: 3}
+  m_PrefabInstance: {fileID: 100918680}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &204439235
 GameObject:
   m_ObjectHideFlags: 0
@@ -929,18 +920,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1101841383}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1257033531 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7217324167200542232, guid: 29a45275470350343b031981db27eb97,
-    type: 3}
-  m_PrefabInstance: {fileID: 100918680}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca3d7bb944d696b438ae2f52b660caf3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1257033532 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 418985633218248879, guid: 29a45275470350343b031981db27eb97,
@@ -1150,7 +1129,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 1257033532}
-  playerCombat: {fileID: 1257033531}
+  characterShooting: {fileID: 1456254697}
+--- !u!4 &1456254695 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 828383375169964641, guid: 29a45275470350343b031981db27eb97,
+    type: 3}
+  m_PrefabInstance: {fileID: 100918680}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1456254697 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 927451569278932637, guid: 29a45275470350343b031981db27eb97,
+    type: 3}
+  m_PrefabInstance: {fileID: 100918680}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48b7b020242fc0b4fabe6710fef7910b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1663470551
 GameObject:
   m_ObjectHideFlags: 0
@@ -1263,6 +1260,7 @@ GameObject:
   - component: {fileID: 1833753663}
   - component: {fileID: 1833753662}
   - component: {fileID: 1833753665}
+  - component: {fileID: 1833753666}
   m_Layer: 7
   m_Name: EnemyCylinder
   m_TagString: Untagged
@@ -1351,6 +1349,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 10
+--- !u!114 &1833753666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1833753660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dfa45ae4bf881243b33e13d567a4b8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetPosition: {fileID: 1456254695}
+  speed: 2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

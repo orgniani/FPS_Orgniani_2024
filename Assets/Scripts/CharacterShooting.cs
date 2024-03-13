@@ -1,13 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCombat : MonoBehaviour
+public class CharacterShooting : MonoBehaviour
 {
     [SerializeField] private LayerMask enemies;
-
     [SerializeField] private Vector3 offset;
-
     [SerializeField] private float gunDamage = 10;
 
     public void Shoot()
@@ -22,12 +18,10 @@ public class PlayerCombat : MonoBehaviour
 			HP.ReceiveDamage(gunDamage);
 
 		    Debug.DrawRay(sourcePos, transform.forward * hit.distance, Color.yellow, 2);
-		    Debug.Log("Did Hit");
 	    }
 	    else
 	    {
 		    Debug.DrawRay(sourcePos, transform.forward * 1000, Color.white, 2);
-		    Debug.Log("Did not Hit");
 	    }
 	}
 }
