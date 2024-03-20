@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-public class FollowPlayer : MonoBehaviour
+public class FollowerEnemy : MonoBehaviour
 {
     [SerializeField] private Transform targetPosition;
     [SerializeField] private float speed = 3;
