@@ -14,5 +14,7 @@ public class ShotFeedback : MonoBehaviour
     public void ShowShotDirection()
     {
         //lineRenderer.SetPosition();
+        //lineRenderer.SetPosition(0, hitPoint);
+        Destroy(gameObject,0.1f);
     }
 }

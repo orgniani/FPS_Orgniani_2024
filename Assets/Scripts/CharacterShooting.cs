@@ -7,11 +7,15 @@ public class CharacterShooting : MonoBehaviour
     [SerializeField] private Vector3 offset;
     [SerializeField] private float gunDamage = 10;
 
+    [SerializeField] private ShotFeedback shotPrefab;
+    [SerializeField] private Transform gunTip;
+
+    [SerializeField] private ParticleSystem gunSmoke;
+
     public bool isPointingAtEnemy = false;
 
-    [SerializeField] private ShotFeedback shotFeedback;
-
     private HealthController targetHP;
+    private Vector3 hitPoint;
 
     private void Update()
     {
@@ -28,6 +32,7 @@ public class CharacterShooting : MonoBehaviour
         {
             // Check if the raycast hits an enemy
             targetHP = hit.transform.GetComponentInParent<HealthController>();
+            hitPoint = hit.point;
             isPointingAtEnemy = true;
         }
         else
@@ -38,11 +43,15 @@ public class CharacterShooting : MonoBehaviour
 
     public void Shoot()
     {
-	    if (isPointingAtEnemy)
+        gunSmoke.Play();
+
+        ShotFeedback shotFeedback = Instantiate(shotPrefab, gunTip.position, gunTip.rotation);
+        shotFeedback.ShowShotDirection();
+
+        if (isPointingAtEnemy)
 	    {
-			targetHP.ReceiveDamage(gunDamage);
+			targetHP.ReceiveDamage(gunDamage, hitPoint);
 	    }
+
 	}
-
-
 }

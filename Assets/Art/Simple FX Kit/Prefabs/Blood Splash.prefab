@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3548588485384254794}
   - component: {fileID: 3548588485384254795}
   m_Layer: 0
-  m_Name: VFX-BloodSplash
+  m_Name: Blood Splash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -733,7 +733,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.1
+      value: 1
       mode: 0
       spread: 0
       speed:
@@ -1027,7 +1027,7 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0.05446303
+          value: 0.36296296
           inSlope: -0.73313713
           outSlope: -0.73313713
           tangentMode: 0
@@ -1035,7 +1035,7 @@ ParticleSystem:
           inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 0.24875417
+          time: 1
           value: 0
           inSlope: -0.08643276
           outSlope: -0.08643276
@@ -1059,7 +1059,7 @@ ParticleSystem:
           inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 0.24577115
+          time: 0.39999998
           value: 0
           inSlope: 0
           outSlope: 0
@@ -1068,7 +1068,7 @@ ParticleSystem:
           inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 0.24875417
+          time: 1
           value: 0
           inSlope: 0
           outSlope: 0

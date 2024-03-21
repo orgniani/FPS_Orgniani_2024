@@ -8,6 +8,11 @@ public class HealthController : MonoBehaviour
     [SerializeField] private float maxHealth = 100;
 
     [SerializeField] private ParticleSystem bloodSplashPrefab;
+    [SerializeField] private ParticleSystem explosionPrefab;
+
+    [SerializeField] private bool shouldExplodeAfterDeath = false;
+    [SerializeField] private float explosionForce = 1000f;
+    [SerializeField] private float explosionRadius = 5f;
 
     public VoidDelegate onHurt;
 
@@ -16,26 +21,50 @@ public class HealthController : MonoBehaviour
     public float getMaxHealth() => maxHealth;
 
 
-    public void ReceiveDamage(float damage)
+    public void ReceiveDamage(float damage, Vector3 hitPoint)
 	{
 		if (onHurt != null) onHurt();
 
 		health -= damage;
-        CreateBloodSplash();
+        CreateBloodSplash(hitPoint);
 
 		if (health <= 0)
 			Die();
 	}
 
-    private void CreateBloodSplash()
+    private void CreateBloodSplash(Vector3 hitPoint)
     {
-        Instantiate(bloodSplashPrefab,
-        transform.position,
-        transform.rotation);
+        Instantiate(bloodSplashPrefab, hitPoint, Quaternion.identity);
     }
 
     private void Die()
     {
+        if(shouldExplodeAfterDeath)
+        {
+            Explode();
+        }
+
         Destroy(gameObject);
+    }
+
+    private void Explode()
+    {
+        Instantiate(explosionPrefab, transform.position, transform.rotation);
+
+        // Get all colliders in the explosion radius
+        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
+
+        foreach (Collider hit in colliders)
+        {
+            Rigidbody rb = hit.GetComponent<Rigidbody>();
+
+            if (rb != null)
+            {
+                rb.isKinematic = false;
+
+                // Apply explosion force to each Rigidbody
+                rb.AddExplosionForce(explosionForce, transform.position, explosionRadius);
+            }
+        }
     }
 }
