@@ -26,13 +26,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7937895989016890107}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0105421, y: -0.028648335, z: -0.000662048, w: 0.9995337}
+  m_LocalRotation: {x: 0, y: -0.021814799, z: 0, w: 0.999762}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -1.21, y: -3.283, z: -0.041}
+  m_LocalEulerAnglesHint: {x: 0, y: -2.5, z: 0}
 --- !u!114 &454321359987494590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0626135744ee70246a11d0f546690f92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gunRange: 0
 --- !u!120 &4810680200407860798
 LineRenderer:
   serializedVersion: 2

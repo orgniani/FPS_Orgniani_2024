@@ -592,12 +592,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 250736722}
   m_CullTransparentMesh: 1
---- !u!4 &356526411 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2174936259168010062, guid: 4eccb97e41276f34e9494f5d299299da,
-    type: 3}
-  m_PrefabInstance: {fileID: 5806815242848932568}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &390530533
 GameObject:
   m_ObjectHideFlags: 0
@@ -2066,8 +2060,7 @@ Transform:
   m_LocalPosition: {x: 0.166, y: 0.967, z: 0.768}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 356526411}
+  m_Children: []
   m_Father: {fileID: 390530534}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1663470551
@@ -2711,12 +2704,13 @@ MonoBehaviour:
   enemies:
     serializedVersion: 2
     m_Bits: 128
-  offset: {x: 0, y: -0.5, z: 0}
+  offset: {x: 0, y: 0, z: 0}
   gunDamage: 10
   shotPrefab: {fileID: 454321359987494590, guid: 4eccb97e41276f34e9494f5d299299da,
     type: 3}
   gunTip: {fileID: 1542309098}
   gunSmoke: {fileID: 457332613}
+  gunRange: 50
   isPointingAtEnemy: 0
 --- !u!143 &1356618059297410431
 CharacterController:
@@ -2976,79 +2970,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2960571601388153911}
   m_Enabled: 1
---- !u!1001 &5806815242848932568
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1542309098}
-    m_Modifications:
-    - target: {fileID: 2174936259168010062, guid: 4eccb97e41276f34e9494f5d299299da,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2174936259168010062, guid: 4eccb97e41276f34e9494f5d299299da,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2174936259168010062, guid: 4eccb97e41276f34e9494f5d299299da,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2174936259168010062, guid: 4eccb97e41276f34e9494f5d299299da,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.9995337
-      objectReference: {fileID: 0}
-    - target: {fileID: 2174936259168010062, guid: 4eccb97e41276f34e9494f5d299299da,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.0105421
-      objectReference: {fileID: 0}
-    - target: {fileID: 2174936259168010062, guid: 4eccb97e41276f34e9494f5d299299da,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.028648335
-      objectReference: {fileID: 0}
-    - target: {fileID: 2174936259168010062, guid: 4eccb97e41276f34e9494f5d299299da,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.000662048
-      objectReference: {fileID: 0}
-    - target: {fileID: 2174936259168010062, guid: 4eccb97e41276f34e9494f5d299299da,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -1.21
-      objectReference: {fileID: 0}
-    - target: {fileID: 2174936259168010062, guid: 4eccb97e41276f34e9494f5d299299da,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -3.283
-      objectReference: {fileID: 0}
-    - target: {fileID: 2174936259168010062, guid: 4eccb97e41276f34e9494f5d299299da,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -0.041
-      objectReference: {fileID: 0}
-    - target: {fileID: 7937895989016890107, guid: 4eccb97e41276f34e9494f5d299299da,
-        type: 3}
-      propertyPath: m_Name
-      value: ShotFeedback
-      objectReference: {fileID: 0}
-    - target: {fileID: 7937895989016890107, guid: 4eccb97e41276f34e9494f5d299299da,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 4eccb97e41276f34e9494f5d299299da, type: 3}
 --- !u!1 &6220971133911949861
 GameObject:
   m_ObjectHideFlags: 0

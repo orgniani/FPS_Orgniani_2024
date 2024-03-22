@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ShotFeedback : MonoBehaviour
 {
+    [SerializeField] private float gunRange;
     private LineRenderer lineRenderer;
 
     private void Awake()
@@ -11,10 +12,14 @@ public class ShotFeedback : MonoBehaviour
         lineRenderer = GetComponent<LineRenderer>();
     }
 
-    public void ShowShotDirection()
+    public void ShowShotDirection(Vector3 endPosition)
     {
-        //lineRenderer.SetPosition();
-        //lineRenderer.SetPosition(0, hitPoint);
+        // Calculate the distance between start and end position
+        float distance = Vector3.Distance(transform.position, endPosition);
+
+        // Ensure the line doesn't exceed the calculated distance
+        lineRenderer.SetPosition(1, transform.InverseTransformPoint(transform.position + Vector3.ClampMagnitude(endPosition - transform.position, distance)));
+
         Destroy(gameObject,0.1f);
     }
 }
