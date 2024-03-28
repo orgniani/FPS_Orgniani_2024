@@ -14,9 +14,12 @@ public class HealthController : MonoBehaviour
     [SerializeField] private float explosionForce = 1000f;
     [SerializeField] private float explosionRadius = 5f;
 
-    public VoidDelegate onHurt;
+    public bool shouldDisappear = true;
 
-	public float getHealth() => health;
+    public VoidDelegate onHurt;
+    public VoidDelegate onDead;
+
+    public float getHealth() => health;
 
     public float getMaxHealth() => maxHealth;
 
@@ -39,12 +42,14 @@ public class HealthController : MonoBehaviour
 
     private void Die()
     {
+        if(onDead != null) onDead();
+
         if(shouldExplodeAfterDeath)
         {
             Explode();
         }
 
-        gameObject.SetActive(false);
+        if(shouldDisappear) gameObject.SetActive(false);
     }
 
     private void Explode()
