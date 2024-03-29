@@ -26,12 +26,12 @@ public class HealthController : MonoBehaviour
 
     public void ReceiveDamage(float damage, Vector3 hitPoint)
 	{
-		if (onHurt != null) onHurt();
-
 		health -= damage;
+        if (onHurt != null) onHurt();
+
         CreateBloodSplash(hitPoint);
 
-		if (health <= 0)
+        if (health <= 0)
 			Die();
 	}
 

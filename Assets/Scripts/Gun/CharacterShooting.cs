@@ -50,6 +50,8 @@ public class CharacterShooting : MonoBehaviour
         gunSmoke.Play();
 
         ShotFeedback shotFeedback = Instantiate(shotPrefab, gunTip.position, Quaternion.identity);
+
+
         Vector3 endPosition = gunTip.position + gunTip.forward * gunRange;
 
         if (isPointingAtEnemy)
@@ -63,5 +65,5 @@ public class CharacterShooting : MonoBehaviour
             shotFeedback.ShowShotDirection(endPosition);
         }
 
-	}
+    }
 }

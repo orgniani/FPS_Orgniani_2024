@@ -30,8 +30,6 @@ public class UIHUD : MonoBehaviour
     private void Update()
     {
         ChangeGunSightColor();
-        HandleHealthBar();
-        HandleHPText();
     }
 
     private void HandleHPText()
