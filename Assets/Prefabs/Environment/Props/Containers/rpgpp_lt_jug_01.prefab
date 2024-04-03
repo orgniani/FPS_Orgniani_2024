@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4093639486830472}
   - component: {fileID: 33794016305061850}
   - component: {fileID: 23077854958784434}
+  - component: {fileID: 2486358863853954172}
   m_Layer: 0
   m_Name: rpgpp_lt_jug_01
   m_TagString: Untagged
@@ -85,3 +86,26 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &2486358863853954172
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1085883031562116}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.14604537
+  m_Height: 0.5378138
+  m_Direction: 1
+  m_Center: {x: -0.031889666, y: 0.26890683, z: -0.000000033527613}

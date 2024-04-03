@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4690208453440012628}
   - component: {fileID: 7587356794800829748}
   m_Layer: 7
-  m_Name: EnemySphere
+  m_Name: YellowEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -106,12 +106,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 30
   maxHealth: 100
-  bloodSplashPrefab: {fileID: 3548588485384254794, guid: 2f9e7dc163581394da1e00b561eed65d,
+  bloodSplashPrefab: {fileID: 3548588485384254794, guid: 5991f1cbbb0717e409995d8e06098316,
     type: 3}
-  explosionPrefab: {fileID: 0}
-  shouldExplodeAfterDeath: 0
-  explosionForce: 1000
-  explosionRadius: 5
   shouldDisappear: 1
 --- !u!114 &7461897769082936039
 MonoBehaviour:
@@ -132,6 +128,9 @@ MonoBehaviour:
   visionRadius: 8
   offset: 6.5
   proximityRadius: 3
+  fieldOfViewAngle: 90
+  stopAndWaitTime: 1
+  shouldStop: 0
   target: {fileID: 0}
   patrolPoints:
   - {fileID: 0}

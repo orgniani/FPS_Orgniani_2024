@@ -1,3 +1,6 @@
+using System.Collections;
+using Unity.VisualScripting;
+using UnityEditor.Timeline;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -10,6 +13,10 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float offset = 0.5f;
 
     [SerializeField] private float proximityRadius = 5f;
+    [SerializeField] private float fieldOfViewAngle = 90f;
+
+    [SerializeField] private float stopAndWaitTime = 1f;
+    public bool shouldStop = false;
 
     [SerializeField] private Transform target;
     private NavMeshAgent agent;
@@ -17,18 +24,21 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Transform[] patrolPoints;
     private int currentpatrolPointIndex = 0;
 
+
     public VoidDelegate onAttack;
 
-    private enum MovementState { PATROL = 0, FOLLOW }
+    private enum MovementState { PATROL = 0, FOLLOW, STOP }
 
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
     }
 
-    void Update()
+    private void Update()
     {
         CheckIfPlayerSpotted();
+
+        if (shouldStop) return;
 
         if (!playerSpotted)
         {
@@ -44,27 +54,27 @@ public class Enemy : MonoBehaviour
 
     }
 
-    void CheckIfPlayerSpotted()
+    private void CheckIfPlayerSpotted()
     {
         bool playerIsTooClose = Physics.CheckSphere(transform.position, proximityRadius, playerLayer);
 
         Vector3 spherePosition = transform.position + transform.forward * offset;
-        Collider[] hitColliders = Physics.OverlapSphere(spherePosition, visionRadius, playerLayer);
+        bool playerIsInVisionRange = Physics.CheckSphere(spherePosition, visionRadius, playerLayer);
+
+        Vector3 directionToPlayer = target.position - transform.position;
+        float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
 
         if (playerIsTooClose) playerSpotted = true;
 
         else
         {
-            if (hitColliders.Length > 0)
+            if (playerIsInVisionRange && angleToPlayer < fieldOfViewAngle * 0.5f)
             {
+                RaycastHit hit;
 
                 if (!playerSpotted)
                 {
-                    RaycastHit hit;
-                    Vector3 rayDirection = (target.position - transform.position).normalized;
-                    Vector3 raycastStartPosition = transform.position;
-
-                    if (Physics.Raycast(raycastStartPosition, rayDirection, out hit, Mathf.Infinity, ~playerLayer))
+                    if (Physics.Raycast(transform.position, directionToPlayer, out hit, visionRadius*2f, ~playerLayer))
                     {
                         playerSpotted = false;
                     }
@@ -72,21 +82,36 @@ public class Enemy : MonoBehaviour
                     else
                     {
                         playerSpotted = true;
-                    }
 
-                    //Debug.DrawLine(raycastStartPosition, rayDirection, playerSpotted ? Color.red : Color.green);
+                    }
                 }
             }
 
             else
             {
-                playerSpotted = false;
+                if(playerSpotted)
+                {
+                    StartCoroutine(StopAndWait());
+                    playerSpotted = false;
+                }
             }
         }
 
     }
 
-    void Patrol()
+    private IEnumerator StopAndWait()
+    {
+        shouldStop = true;
+
+        Vector3 stopPoint = transform.position + transform.forward * 2f;
+        agent.SetDestination(stopPoint);
+
+        yield return new WaitForSeconds(stopAndWaitTime);
+
+        shouldStop = false;
+    }
+
+    private void Patrol()
     {
         Vector3 nextPoint = patrolPoints[currentpatrolPointIndex].position;
 
