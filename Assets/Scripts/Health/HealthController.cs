@@ -1,6 +1,5 @@
+using System;
 using UnityEngine;
-
-public delegate void VoidDelegate();
 
 public class HealthController : MonoBehaviour
 {
@@ -11,8 +10,8 @@ public class HealthController : MonoBehaviour
 
     public bool shouldDisappear = true;
 
-    public VoidDelegate onHurt;
-    public VoidDelegate onDead;
+    public event Action onHurt = delegate { };
+    public event Action onDead = delegate { };
 
     public float getHealth() => health;
 
@@ -22,7 +21,7 @@ public class HealthController : MonoBehaviour
     public void ReceiveDamage(float damage, Vector3 hitPoint)
 	{
 		health -= damage;
-        if (onHurt != null) onHurt();
+        onHurt.Invoke();
 
         CreateBloodSplash(hitPoint);
 
@@ -38,7 +37,7 @@ public class HealthController : MonoBehaviour
 
     private void Die()
     {
-        if(onDead != null) onDead();
+        onDead.Invoke();
 
         if(shouldDisappear) gameObject.SetActive(false);
     }

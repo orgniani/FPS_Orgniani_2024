@@ -1,8 +1,6 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEngine.GraphicsBuffer;
 
 public class Attack : MonoBehaviour
 {
@@ -16,6 +14,8 @@ public class Attack : MonoBehaviour
     [SerializeField] private LayerMask player;
 
     private bool shouldAttack = true;
+
+    public event Action onPunch = delegate { };
 
     private void OnEnable()
     {
@@ -44,7 +44,10 @@ public class Attack : MonoBehaviour
         if (Physics.Raycast(sourcePos, transform.forward, out hit, attackProximity, player))
         {
             HealthController playerHP = hit.transform.GetComponentInParent<HealthController>();
+
             Debug.Log("Attack!");
+            onPunch.Invoke();
+
             playerHP.ReceiveDamage(damage, hit.point);
         }
 
