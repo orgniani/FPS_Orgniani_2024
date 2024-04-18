@@ -11,7 +11,7 @@ public class UIHUD : MonoBehaviour
     [SerializeField] private TextMeshProUGUI HPText;
     [SerializeField] private Image healthBar;
 
-    [SerializeField] private CharacterShooting shooting;
+    [SerializeField] private ShootController shooting;
     [SerializeField] private FirstPersonController player;
     [SerializeField] private HealthController playerHP;
 

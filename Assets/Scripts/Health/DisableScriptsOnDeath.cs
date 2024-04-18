@@ -6,7 +6,7 @@ public class DisableScriptsOnDeath : MonoBehaviour
 {
     [SerializeField] private HealthController HP;
     [SerializeField] private FirstPersonController FPS;
-    [SerializeField] private CharacterShooting gun;
+    [SerializeField] private ShootController gun;
 
     [SerializeField] private CharacterController CC;
     private void OnEnable()

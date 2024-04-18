@@ -130,10 +130,6 @@ MonoBehaviour:
   maxHealth: 100
   bloodSplashPrefab: {fileID: 3548588485384254794, guid: 2f9e7dc163581394da1e00b561eed65d,
     type: 3}
-  explosionPrefab: {fileID: 0}
-  shouldExplodeAfterDeath: 0
-  explosionForce: 1000
-  explosionRadius: 5
   shouldDisappear: 0
 --- !u!114 &6023514318350954800
 MonoBehaviour:

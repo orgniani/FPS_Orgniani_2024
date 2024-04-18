@@ -1,0 +1,51 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class SoundManager : MonoBehaviour
+{
+    [SerializeField] private Slider volumeSlider;
+    [SerializeField] private string volumeName = "musicVolume";
+
+    [SerializeField] private Sprite soundOnIcon;
+    [SerializeField] private Sprite soundOffIcon;
+    [SerializeField] private Image soundIcon;
+
+    private void Start()
+    {
+        if(!PlayerPrefs.HasKey(volumeName))
+        {
+            PlayerPrefs.SetFloat(volumeName, 1);
+            Load();
+        }
+
+        else
+        {
+            Load();
+        }
+    }
+    public void ChangeVolume()
+    {
+        AudioListener.volume = volumeSlider.value;
+        Save();
+
+        UpdateSoundIcon(volumeSlider.value);
+    }
+
+    private void Load()
+    {
+        volumeSlider.value = PlayerPrefs.GetFloat(volumeName);
+    }
+
+    private void Save()
+    {
+        PlayerPrefs.SetFloat(volumeName, volumeSlider.value);
+    }
+
+    private void UpdateSoundIcon(float volume)
+    {
+        if (volume == 0) soundIcon.sprite = soundOffIcon;
+        else soundIcon.sprite = soundOnIcon;
+    }
+}

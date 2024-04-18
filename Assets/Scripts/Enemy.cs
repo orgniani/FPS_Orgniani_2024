@@ -40,11 +40,13 @@ public class Enemy : MonoBehaviour
 
     private void OnEnable()
     {
+        HP.onHurt += HandleHurt;
         HP.onDead += HandleDeath;
     }
 
     private void OnDisable()
     {
+        HP.onHurt -= HandleHurt;
         HP.onDead -= HandleDeath;
     }
 
@@ -61,19 +63,12 @@ public class Enemy : MonoBehaviour
 
         else
         {
+            HealthController playerHP = target.GetComponentInParent<HealthController>();
+            if (playerHP.getHealth() <= 0) return;
+
             onAttack.Invoke();
 
-            // Calculate the offset vector
-            Vector3 offsetDirection = (target.position - transform.position).normalized;
-            Vector3 offsetPosition = target.position + offsetDirection * offsetTargetDistance;
-
-            // Sample a valid position near the offset position
-            NavMeshHit hit;
-            if (NavMesh.SamplePosition(offsetPosition, out hit, offsetTargetDistance, NavMesh.AllAreas))
-            {
-                // Set the destination to the sampled position
-                agent.SetDestination(hit.position);
-            }
+            agent.SetDestination(target.position);
         }
 
 
@@ -169,6 +164,24 @@ public class Enemy : MonoBehaviour
     {
         agent.isStopped = true;
         enabled = false;
+    }
+
+    private void HandleHurt()
+    {
+        if (HP.getHealth() <= 0) return;
+
+        StartCoroutine(StopMovingAfterHit());
+    }
+
+    private IEnumerator StopMovingAfterHit()
+    {
+        agent.isStopped = true;
+        enabled = false;
+
+        yield return new WaitForSeconds(0.5f);
+
+        agent.isStopped = false;
+        enabled = true;
     }
 
 }
