@@ -1,7 +1,5 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Device;
 
 public class MenuInputReader : MonoBehaviour
 {
