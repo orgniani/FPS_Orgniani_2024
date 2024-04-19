@@ -5,6 +5,7 @@ public class InputReader : MonoBehaviour
 {
     [SerializeField] private FirstPersonController playerController;
     [SerializeField] private ShootController characterShooting;
+    [SerializeField] private MenuInputReader menuController;
 
     private void Start()
     {
@@ -62,6 +63,14 @@ public class InputReader : MonoBehaviour
         if (inputContext.started)
         {
             characterShooting.Shoot();
+        }
+    }
+
+    public void PauseGame(InputAction.CallbackContext inputContext)
+    {
+        if (inputContext.started)
+        {
+            menuController.PauseAndUnpauseGame();
         }
     }
 }

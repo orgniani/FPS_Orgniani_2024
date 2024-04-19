@@ -12,6 +12,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioSource winGameSoundEffect;
     [SerializeField] private AudioSource loseGameSoundEffect;
 
+    [SerializeField] private GameObject gameOverScreen;
+    [SerializeField] private GameObject levelCompletedScreen;
+
+    [SerializeField] private UITimeCounter timeCounter;
+
     private void OnEnable()
     {
 
@@ -47,14 +52,30 @@ public class GameManager : MonoBehaviour
 
     private void WinGame()
     {
-        winGameSoundEffect.Play();
-        inputReader.gameObject.SetActive(false);
-
+        StopGameAndOpenScreens(levelCompletedScreen, winGameSoundEffect);
     }
 
     private void LoseGame()
     {
-        loseGameSoundEffect.Play();
+        StopGameAndOpenScreens(gameOverScreen, loseGameSoundEffect);
+    }
+
+    private void StopGameAndOpenScreens(GameObject screen, AudioSource soundEffect)
+    {
+        Cursor.lockState = CursorLockMode.None;
+
+        soundEffect.Play();
+        screen.SetActive(true);
+
+        foreach(HealthController enemy in enemies)
+        {
+            if (enemy.TryGetComponent(out Enemy enemyScript))
+                enemyScript.enabled = false;
+
+            //enemy.gameObject.SetActive(false);
+        }
+
         inputReader.gameObject.SetActive(false);
+        timeCounter.StopCounting();
     }
 }

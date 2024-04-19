@@ -17,7 +17,8 @@ public class SoundManager : MonoBehaviour
         if(!PlayerPrefs.HasKey(volumeName))
         {
             PlayerPrefs.SetFloat(volumeName, 1);
-            Load();
+            AudioListener.volume = 1;
+            volumeSlider.value = 1; 
         }
 
         else

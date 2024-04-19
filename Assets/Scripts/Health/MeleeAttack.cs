@@ -71,9 +71,11 @@ public class MeleeAttack : MonoBehaviour
         agent.isStopped = true;
         enabled = false;
 
-        yield return new WaitForSeconds(0.5f);
+        //yield return new WaitForSeconds(0.5f);
 
         onPunch.Invoke();
+        Debug.Log("Attack!");
+
         playerHP.ReceiveDamage(damage, hitPoint);
 
         yield return new WaitForSeconds(0.5f);

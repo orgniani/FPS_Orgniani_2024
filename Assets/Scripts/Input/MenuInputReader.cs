@@ -1,23 +1,23 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Device;
 
 public class MenuInputReader : MonoBehaviour
 {
-    [Header("References")]
     [SerializeField] private LevelManager levelManager;
 
-    [Header("Screens")]
+    [SerializeField] private GameObject pauseScreen;
     [SerializeField] private string animatorParameterClose = "close";
-
-    private void Start()
-    {
-        if (Time.timeScale == 0)
-            Time.timeScale = 1;
-    }
 
     public void StartGame()
     {
         levelManager.StartLevel();
+    }
+
+    public void GoBackToMenu()
+    {
+        levelManager.BackToMenu();
     }
 
     public void OpenScreen(GameObject screen)
@@ -33,16 +33,44 @@ public class MenuInputReader : MonoBehaviour
         StartCoroutine(PlayAndDeactivate(screen));
     }
 
+    public void PauseAndUnpauseGame()
+    {
+        if (Time.timeScale == 0)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Time.timeScale = 1;
+
+            Animator screenAnimator = pauseScreen.GetComponent<Animator>();
+            screenAnimator.SetTrigger(animatorParameterClose);
+
+            StartCoroutine(PlayAndDeactivate(pauseScreen));
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+            pauseScreen.SetActive(true);
+
+            StartCoroutine(PlayAndPauseGame());
+        }
+    }
+
     private IEnumerator PlayAndDeactivate(GameObject screen)
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.5f);
 
         screen.SetActive(false);
     }
 
+    private IEnumerator PlayAndPauseGame()
+    {
+        yield return new WaitForSeconds(1.5f);
+
+        Time.timeScale = 0;
+    }
+
     public void ExitGame()
     {
-        Application.Quit();
+        UnityEngine.Application.Quit();
     }
 }
 

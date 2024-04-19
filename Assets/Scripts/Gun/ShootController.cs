@@ -47,6 +47,8 @@ public class ShootController : MonoBehaviour
 
     public void Shoot()
     {
+        if (Cursor.lockState != CursorLockMode.Locked) return;
+
         gunSmoke.Play();
 
         ShotFeedback shotFeedback = Instantiate(shotPrefab, gunTip.position, Quaternion.identity);
