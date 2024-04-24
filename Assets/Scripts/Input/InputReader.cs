@@ -3,9 +3,10 @@ using UnityEngine.InputSystem;
 
 public class InputReader : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private FirstPersonController playerController;
     [SerializeField] private ShootController characterShooting;
-    [SerializeField] private MenuInputReader menuController;
+    [SerializeField] private MenuManager menuController;
 
     private void Start()
     {

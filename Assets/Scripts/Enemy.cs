@@ -5,11 +5,16 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
+    [Header("References")]
+    [SerializeField] private MeleeAttack attack;
     [SerializeField] private HealthController HP;
 
-    [SerializeField] private bool playerSpotted = false;
+    [SerializeField] private Transform[] patrolPoints;
+    [SerializeField] private Transform target;
+
     [SerializeField] private LayerMask playerLayer;
 
+    [Header("Parameters")]
     [SerializeField] private float visionRadius = 5f;
     [SerializeField] private float offset = 0.5f;
 
@@ -17,22 +22,28 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float fieldOfViewAngle = 90f;
 
     [SerializeField] private float stopAndWaitTime = 1f;
-    public bool shouldStop = false;
 
-    [SerializeField] private Transform target;
+    private bool playerSpotted = false;
+    private bool shouldStop = false;
+
     private NavMeshAgent agent;
-    public float offsetTargetDistance = 1.0f;
+    private HealthController playerHP;
 
-    [SerializeField] private Transform[] patrolPoints;
     private int currentpatrolPointIndex = 0;
 
-    public event Action onAttack = delegate { };
+    //public event Action onAttack = delegate { };
+
+    public static event Action<Enemy> onSpawn;
+    public static event Action<Enemy> onDeath;
 
     private enum MovementState { PATROL = 0, FOLLOW, STOP }
 
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        playerHP = target.gameObject.GetComponent<HealthController>();
+
+        onSpawn?.Invoke(this);
     }
 
     private void OnEnable()
@@ -60,11 +71,10 @@ public class Enemy : MonoBehaviour
 
         else
         {
-            HealthController playerHP = target.GetComponentInParent<HealthController>();
-            if (playerHP.getHealth() <= 0) return;
+            if (playerHP.Health <= 0) return;
+                //onAttack?.Invoke();
 
-            onAttack.Invoke();
-
+            float waitTime = attack.AttackNow();
             agent.SetDestination(target.position);
         }
 
@@ -134,7 +144,7 @@ public class Enemy : MonoBehaviour
 
         float targetDistance = Vector2.Distance(transform.position, nextPoint);
 
-        if (targetDistance < 1f)
+        if (targetDistance < 3f)
         {
             currentpatrolPointIndex++;
 
@@ -150,7 +160,6 @@ public class Enemy : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        // Draw the sphere in the scene view
         Gizmos.color = playerSpotted ? Color.red : Color.green;
         Gizmos.DrawWireSphere(transform.position + transform.forward * offset, visionRadius);
 
@@ -159,13 +168,15 @@ public class Enemy : MonoBehaviour
 
     private void HandleDeath()
     {
+        onDeath?.Invoke(this);
+
         agent.isStopped = true;
         enabled = false;
     }
 
     private void HandleHurt()
     {
-        if (HP.getHealth() <= 0) return;
+        if (HP.Health <= 0) return;
 
         StartCoroutine(StopMovingAfterHit());
     }

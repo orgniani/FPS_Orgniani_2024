@@ -6,17 +6,11 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] private Transform look; //pivot
 
 	[Header("Player Movement")]
-	[Tooltip("Move speed of the character in m/s")]
     [SerializeField] private float moveSpeed = 4.0f;
-
-	[Tooltip("Sprint speed of the character in m/s")]
     [SerializeField] private float sprintSpeed = 6.0f;
-
-	[Tooltip("Rotation speed of the character")]
     [SerializeField] private float rotationSpeed = 1.0f;
 
 	[Space(10)]
-	[Tooltip("The height the player can jump")]
     [SerializeField] private float jumpHeight = 1.2f;
 
 	[Tooltip("The character uses its own gravity value. The engine default is -9.81f")]
@@ -24,16 +18,12 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] private float terminalVelocity = 53.0f;
 
 	[Header("Player Grounded")]
-	[Tooltip("If the character is grounded or not. Not part of the CharacterController built in grounded check")]
     [SerializeField] private bool grounded = true;
-
-	[Tooltip("Offset to mark feet position")]
     [SerializeField] private float groundedOffset = 0.85f;
 
 	[Tooltip("The radius of the grounded check. Should match the radius of the CharacterController")]
     [SerializeField] private float groundedRadius = 0.5f;
 
-	[Tooltip("What layers the character uses as ground")]
     [SerializeField] private LayerMask groundLayers;
 
 	[Header("Camera Limits")]

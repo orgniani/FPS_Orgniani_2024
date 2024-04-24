@@ -3,9 +3,11 @@ using UnityEngine.UI;
 
 public class SoundManager : MonoBehaviour
 {
+    [Header("Volume")]
     [SerializeField] private Slider volumeSlider;
     [SerializeField] private string volumeName = "musicVolume";
 
+    [Header("Sound On/Off Icon")]
     [SerializeField] private Sprite soundOnIcon;
     [SerializeField] private Sprite soundOffIcon;
     [SerializeField] private Image soundIcon;

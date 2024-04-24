@@ -2,13 +2,14 @@ using UnityEngine;
 
 public class AfterDeathExplosion : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private ParticleSystem explosionPrefab;
+    [SerializeField] private HealthController HP;
 
+    [Header("Parameters")]
     [SerializeField] private float explosionForce = 1000f;
     [SerializeField] private float explosionRadius = 5f;
     [SerializeField] private float explosionDamage = 10;
-
-    [SerializeField] private HealthController HP;
 
     private void OnEnable()
     {

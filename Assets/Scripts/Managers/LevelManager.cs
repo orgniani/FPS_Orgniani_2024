@@ -1,10 +1,13 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] private int levelIndex = 1;
+    [SerializeField] private int levelBuildIndex = 1;
     [SerializeField] private int mainMenuBuildIndex = 0;
+
+    [SerializeField] private int fakeLoadingTime = 2;
 
     private void Awake()
     {
@@ -15,16 +18,16 @@ public class LevelManager : MonoBehaviour
     }
     public void StartLevel()
     {
-        LoadScene(levelIndex);
+        LoadAndOpen(levelBuildIndex);
     }
 
     public void BackToMenu()
     {
-        LoadScene(mainMenuBuildIndex);
+        LoadAndOpen(mainMenuBuildIndex);
     }
 
-    private void LoadScene(int sceneBuildIndex)
+    private void LoadAndOpen(int sceneBuildIndex)
     {
-        SceneManager.LoadScene(sceneBuildIndex);
+        LoaderManager.Get().LoadScene(sceneBuildIndex, fakeLoadingTime);
     }
 }

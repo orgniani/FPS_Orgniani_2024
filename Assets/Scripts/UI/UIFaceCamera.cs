@@ -2,19 +2,17 @@ using UnityEngine;
 
 public class UIFaceCamera : MonoBehaviour
 {
-    public Camera cam;
-    public bool matchYaxis;
+    [Header("References")]
+    [SerializeField] private Camera cam;
+    [SerializeField] private bool matchYaxis;
 
-    // Use this for initialization
     private void Start()
     {
         cam = Camera.main;
     }
 
-    // Update is called once per frame
     private void Update()
     {
-
         Vector3 pos = cam.transform.position;
         if (matchYaxis)
             pos.y = transform.position.y;

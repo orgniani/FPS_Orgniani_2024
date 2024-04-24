@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class DisableScriptsOnDeath : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private HealthController HP;
     [SerializeField] private FirstPersonController FPS;
     [SerializeField] private ShootController gun;
-
     [SerializeField] private CharacterController CC;
+
     private void OnEnable()
     {
         HP.onDead += HandleDeath;

@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class UIEnemyHealthBar : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private HealthController enemyHP;
     [SerializeField] private Image healthBar;
 
@@ -18,6 +19,6 @@ public class UIEnemyHealthBar : MonoBehaviour
 
     private void HandleHealthBar()
     {
-        healthBar.fillAmount = 1.0f * enemyHP.getHealth() / enemyHP.getMaxHealth();
+        healthBar.fillAmount = 1.0f * enemyHP.Health / enemyHP.MaxHealth;
     }
 }

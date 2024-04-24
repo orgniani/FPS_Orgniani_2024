@@ -3,25 +3,27 @@ using UnityEngine;
 
 public class HealthController : MonoBehaviour
 {
+    [Header("References")]
+    [SerializeField] private ParticleSystem bloodSplashPrefab;
+
+    [Header("Parameters")]
     [SerializeField] private float health =100;
     [SerializeField] private float maxHealth = 100;
 
-    [SerializeField] private ParticleSystem bloodSplashPrefab;
-
-    public bool shouldDisappear = true;
+    [SerializeField] private bool shouldDisappearAfterDeath = false;
 
     public event Action onHurt = delegate { };
     public event Action onDead = delegate { };
 
-    public float getHealth() => health;
+    public float Health => health;
 
-    public float getMaxHealth() => maxHealth;
+    public float MaxHealth => maxHealth;
 
 
     public void ReceiveDamage(float damage, Vector3 hitPoint)
 	{
 		health -= damage;
-        onHurt.Invoke();
+        onHurt?.Invoke();
 
         CreateBloodSplash(hitPoint);
 
@@ -37,8 +39,8 @@ public class HealthController : MonoBehaviour
 
     private void Die()
     {
-        onDead.Invoke();
+        onDead?.Invoke();
 
-        if(shouldDisappear) gameObject.SetActive(false);
+        if(shouldDisappearAfterDeath) gameObject.SetActive(false);
     }
 }

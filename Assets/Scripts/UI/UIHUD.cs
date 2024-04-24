@@ -4,11 +4,13 @@ using UnityEngine.UI;
 
 public class UIHUD : MonoBehaviour
 {
+    [Header("UI References")]
     [SerializeField] private Image gunSight;
 
     [SerializeField] private TextMeshProUGUI HPText;
     [SerializeField] private Image healthBar;
 
+    [Header("Player References")]
     [SerializeField] private ShootController shooting;
     [SerializeField] private FirstPersonController player;
     [SerializeField] private HealthController playerHP;
@@ -33,12 +35,12 @@ public class UIHUD : MonoBehaviour
     private void HandleHPText()
     {
         if (!HPText) return;
-        HPText.text = playerHP.getHealth() + "%";
+        HPText.text = playerHP.Health + "%";
     }
 
     private void HandleHealthBar()
     {
-        healthBar.fillAmount = 1.0f * playerHP.getHealth() / playerHP.getMaxHealth();
+        healthBar.fillAmount = 1.0f * playerHP.Health / playerHP.MaxHealth;
     }
 
     private void ChangeGunSightColor()

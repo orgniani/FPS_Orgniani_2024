@@ -3,54 +3,49 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private HealthController playerHP;
-    [SerializeField] private List<HealthController> enemies;
+    [SerializeField] private List<Enemy> enemies;
     [SerializeField] private InputReader inputReader;
 
+    [Header("Sound Effects")]
     [SerializeField] private AudioSource winGameSoundEffect;
     [SerializeField] private AudioSource loseGameSoundEffect;
 
+    [Header("Screens")]
     [SerializeField] private GameObject gameOverScreen;
     [SerializeField] private GameObject levelCompletedScreen;
 
+    [Header("Timer")]
     [SerializeField] private UITimeCounter timeCounter;
 
     private void OnEnable()
     {
-
         playerHP.onDead += LoseGame;
-
-        for(int i = enemies.Count - 1; i >= 0; i--)
-        {
-            enemies[i].onDead += KillCounter;
-        }
+        Enemy.onSpawn += SpawnedEnemy;
+        Enemy.onDeath += KillCounter;
     }
 
     private void OnDisable()
     {
         playerHP.onDead -= LoseGame;
+        Enemy.onSpawn -= SpawnedEnemy;
+        Enemy.onDeath -= KillCounter;
     }
 
-    private void KillCounter()
+    private void KillCounter(Enemy obj)
     {
-        for(int i = enemies.Count - 1; i >= 0; i--)
-        {
-            if (enemies[i].getHealth() <= 0)
-            {
-                enemies[i].onDead -= KillCounter;
-                enemies.Remove(enemies[i]);
-            }
+        enemies.Remove(obj);
 
-            if (enemies.Count == 0)
-            {
-                WinGame();
-            }
+        if (enemies.Count == 0)
+        {
+            StopGameAndOpenScreens(levelCompletedScreen, winGameSoundEffect);
         }
     }
 
-    private void WinGame()
+    private void SpawnedEnemy(Enemy obj)
     {
-        StopGameAndOpenScreens(levelCompletedScreen, winGameSoundEffect);
+        enemies.Add(obj);
     }
 
     private void LoseGame()
@@ -65,12 +60,9 @@ public class GameManager : MonoBehaviour
         soundEffect.Play();
         screen.SetActive(true);
 
-        foreach(HealthController enemy in enemies)
+        foreach(Enemy enemy in enemies)
         {
-            if (enemy.TryGetComponent(out Enemy enemyScript))
-                enemyScript.enabled = false;
-
-            //enemy.gameObject.SetActive(false);
+            enemy.enabled = false;
         }
 
         inputReader.gameObject.SetActive(false);
