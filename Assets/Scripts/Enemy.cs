@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.IO;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -24,12 +25,11 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float stopAndWaitTime = 1f;
 
     private bool playerSpotted = false;
-    private bool shouldStop = false;
 
     private NavMeshAgent agent;
     private HealthController playerHP;
 
-    private int currentpatrolPointIndex = 0;
+    private int currentPatrolPointIndex = 0;
 
     //public event Action onAttack = delegate { };
 
@@ -62,8 +62,6 @@ public class Enemy : MonoBehaviour
     {
         CheckIfPlayerSpotted();
 
-        if (shouldStop) return;
-
         if (!playerSpotted)
         {
             Patrol();
@@ -72,9 +70,11 @@ public class Enemy : MonoBehaviour
         else
         {
             if (playerHP.Health <= 0) return;
-                //onAttack?.Invoke();
+            //onAttack?.Invoke();
 
-            float waitTime = attack.AttackNow();
+
+            //float waitTime = attack.AttackNow();
+            attack.AttackNow(target, playerHP);
             agent.SetDestination(target.position);
         }
 
@@ -128,34 +128,23 @@ public class Enemy : MonoBehaviour
 
     private IEnumerator StopAndWait()
     {
-        shouldStop = true;
-
-        Vector3 stopPoint = transform.position + transform.forward * 2f;
-        agent.SetDestination(stopPoint);
+        agent.isStopped = true;
 
         yield return new WaitForSeconds(stopAndWaitTime);
 
-        shouldStop = false;
+        agent.isStopped = false;
     }
 
     private void Patrol()
     {
-        Vector3 nextPoint = patrolPoints[currentpatrolPointIndex].position;
+        if (agent.remainingDistance < 3f)
+            SetNextPatrolPoint();
+    }
 
-        float targetDistance = Vector2.Distance(transform.position, nextPoint);
-
-        if (targetDistance < 3f)
-        {
-            currentpatrolPointIndex++;
-
-            if (currentpatrolPointIndex >= patrolPoints.Length)
-            {
-                currentpatrolPointIndex = 0;
-            }
-        }
-
-        agent.SetDestination(nextPoint);
-
+    private void SetNextPatrolPoint()
+    {
+        agent.SetDestination(patrolPoints[currentPatrolPointIndex].position);
+        currentPatrolPointIndex = (currentPatrolPointIndex + 1) % patrolPoints.Length;
     }
 
     private void OnDrawGizmos()

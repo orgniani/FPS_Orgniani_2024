@@ -7,6 +7,7 @@ public class ShootController : MonoBehaviour
     [SerializeField] private Vector3 offset;
     [SerializeField] private float gunDamage = 10f;
     [SerializeField] private float gunRange = 10f;
+
     public bool isPointingAtEnemy = false;
 
     [Header("References")]
@@ -16,6 +17,8 @@ public class ShootController : MonoBehaviour
     [SerializeField] private ParticleSystem gunSmoke;
 
     [SerializeField] private LayerMask enemies;
+
+    private float targetDistance;
 
     private HealthController targetHP;
     private Vector3 hitPoint;
@@ -34,10 +37,11 @@ public class ShootController : MonoBehaviour
 
         if (Physics.Raycast(sourcePos, cameraForward, out hit, Mathf.Infinity, enemies))
         {
-            // Check if the raycast hits an enemy
             targetHP = hit.transform.GetComponentInParent<HealthController>();
             hitPoint = hit.point;
-            isPointingAtEnemy = true;
+
+            targetDistance = Vector3.Distance(gunTip.position, hitPoint);
+            isPointingAtEnemy = targetDistance <= gunRange;
         }
         else
         {

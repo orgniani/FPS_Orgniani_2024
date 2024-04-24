@@ -13,6 +13,8 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private string animatorParameterClose = "close";
     [SerializeField] private float screenAnimationDuration = 1.5f;
 
+    private bool canPause = true;
+
     private void Update()
     {
         if (!loadBar) return;
@@ -50,6 +52,10 @@ public class MenuManager : MonoBehaviour
 
     public void PauseAndUnpauseGame()
     {
+        if (!canPause) return;
+
+        canPause = false;
+
         if (Time.timeScale == 0)
         {
             Cursor.lockState = CursorLockMode.Locked;
@@ -60,6 +66,7 @@ public class MenuManager : MonoBehaviour
 
             StartCoroutine(PlayAndDeactivate(pauseScreen));
         }
+
         else
         {
             Cursor.lockState = CursorLockMode.None;
@@ -73,6 +80,7 @@ public class MenuManager : MonoBehaviour
     {
         yield return new WaitForSeconds(screenAnimationDuration);
 
+        canPause = true;
         screen.SetActive(false);
     }
 
@@ -80,6 +88,7 @@ public class MenuManager : MonoBehaviour
     {
         yield return new WaitForSeconds(screenAnimationDuration);
 
+        canPause = true;
         Time.timeScale = 0;
     }
 

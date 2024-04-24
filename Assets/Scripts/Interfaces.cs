@@ -1,6 +1,8 @@
+using UnityEngine;
+
 public interface IAttack
 {
-    float AttackNow();
+    float AttackNow(Transform target, HealthController targetHP);
 }
 
 public interface IHittable
