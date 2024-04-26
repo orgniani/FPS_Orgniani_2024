@@ -1,7 +1,8 @@
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 
-public class ShootController : MonoBehaviour
+public class GunController : MonoBehaviour
 {
     [Header("Parameters")]
     [SerializeField] private Vector3 offset;
@@ -15,6 +16,7 @@ public class ShootController : MonoBehaviour
 
     [SerializeField] private Transform gunTip;
     [SerializeField] private ParticleSystem gunSmoke;
+
 
     [SerializeField] private LayerMask enemies;
 

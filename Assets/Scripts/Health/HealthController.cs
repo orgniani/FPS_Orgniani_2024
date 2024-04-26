@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class HealthController : MonoBehaviour
+public class HealthController : MonoBehaviour, IHittable
 {
     [Header("References")]
     [SerializeField] private ParticleSystem bloodSplashPrefab;

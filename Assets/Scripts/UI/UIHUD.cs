@@ -11,7 +11,7 @@ public class UIHUD : MonoBehaviour
     [SerializeField] private Image healthBar;
 
     [Header("Player References")]
-    [SerializeField] private ShootController shooting;
+    [SerializeField] private GunController shooting;
     [SerializeField] private FirstPersonController player;
     [SerializeField] private HealthController playerHP;
 

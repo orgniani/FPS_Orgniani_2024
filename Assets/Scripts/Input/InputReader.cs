@@ -5,7 +5,8 @@ public class InputReader : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private FirstPersonController playerController;
-    [SerializeField] private ShootController characterShooting;
+    [SerializeField] private GunController gun;
+    [SerializeField] private FireExtinguisherController fireExtinguisher;
     [SerializeField] private MenuManager menuController;
 
     private void Start()
@@ -17,9 +18,16 @@ public class InputReader : MonoBehaviour
             gameObject.SetActive(false);
         }
 
-        else if(!characterShooting )
+        if(!gun)
         {
             Debug.LogError($"{name}: CharacterShooting is null!");
+            Debug.LogError($"Disabling component");
+            gameObject.SetActive(false);
+        }
+
+        if (!fireExtinguisher)
+        {
+            Debug.LogError($"{name}: FireExtinguisher is null!");
             Debug.LogError($"Disabling component");
             gameObject.SetActive(false);
         }
@@ -63,7 +71,13 @@ public class InputReader : MonoBehaviour
     {
         if (inputContext.started)
         {
-            characterShooting.Shoot();
+            gun.Shoot();
+            fireExtinguisher.Spray(true);
+        }
+
+        else if (inputContext.canceled)
+        {
+            fireExtinguisher.Spray(false);
         }
     }
 
