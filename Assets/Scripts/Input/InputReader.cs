@@ -9,6 +9,8 @@ public class InputReader : MonoBehaviour
     [SerializeField] private FireExtinguisherController fireExtinguisher;
     [SerializeField] private MenuManager menuController;
 
+    [SerializeField] private AttackSwapController attackSwapController;
+
     private void Start()
     {
         if(!playerController)
@@ -86,6 +88,22 @@ public class InputReader : MonoBehaviour
         if (inputContext.started)
         {
             menuController.PauseAndUnpauseGame();
+        }
+    }
+
+    public void ChangeToGun(InputAction.CallbackContext inputContext)
+    {
+        if (inputContext.started)
+        {
+            attackSwapController.SwapToGun();
+        }
+    }
+
+    public void ChangeToFireExtinguisher(InputAction.CallbackContext inputContext)
+    {
+        if (inputContext.started)
+        {
+            attackSwapController.SwapToFireExtinguisher();
         }
     }
 }

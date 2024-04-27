@@ -1,6 +1,4 @@
-using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -15,6 +13,8 @@ public class LevelManager : MonoBehaviour
         {
             Time.timeScale = 1;
         }
+
+        Cursor.lockState = CursorLockMode.None;
     }
     public void StartLevel()
     {

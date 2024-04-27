@@ -43,7 +43,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9179692085051701707}
   serializedVersion: 8
-  lengthInSec: 5
+  lengthInSec: 3
   simulationSpeed: 1
   stopAction: 2
   cullingMode: 3
@@ -4842,7 +4842,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   fireInstance: {fileID: 5458057761587274944}
-  fireDeathDuration: 5
 --- !u!65 &9057936292066426200
 BoxCollider:
   m_ObjectHideFlags: 0

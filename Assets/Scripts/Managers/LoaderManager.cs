@@ -36,6 +36,11 @@ public class LoaderManager : MonoBehaviour
 
     public void LoadScene(int sceneIndex, float fakeTime = -1)
     {
+        if (Time.timeScale == 0)
+        {
+            Time.timeScale = 1;
+        }
+
         fakeTime = fakeTime < 0.01f ? fakeLoadTime : fakeTime;
 
         StartCoroutine(AsynchronousLoadWithFake(sceneIndex, fakeTime));

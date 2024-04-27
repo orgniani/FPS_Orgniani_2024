@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -6,6 +8,7 @@ public class GameManager : MonoBehaviour
     [Header("References")]
     [SerializeField] private HealthController playerHP;
     [SerializeField] private List<Enemy> enemies;
+    public List<FlammableObject> flammables;
     [SerializeField] private InputReader inputReader;
 
     [Header("Sound Effects")]
@@ -16,21 +19,34 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject gameOverScreen;
     [SerializeField] private GameObject levelCompletedScreen;
 
-    [Header("Timer")]
+    [Header("Text")]
     [SerializeField] private UITimeCounter timeCounter;
+    [SerializeField] private TextMeshProUGUI gameOverText;
+
+    public int flammablesTotal;
+
+    public event Action onNewDeadTree = delegate { };
 
     private void OnEnable()
     {
         playerHP.onDead += LoseGame;
+
         Enemy.onSpawn += SpawnedEnemy;
         Enemy.onDeath += KillCounter;
+
+        FlammableObject.onSpawn += SpawnedFlammable;
+        FlammableObject.onDeath += DeadNatureCounter;
     }
 
     private void OnDisable()
     {
         playerHP.onDead -= LoseGame;
+
         Enemy.onSpawn -= SpawnedEnemy;
         Enemy.onDeath -= KillCounter;
+
+        FlammableObject.onSpawn -= SpawnedFlammable;
+        FlammableObject.onDeath -= DeadNatureCounter;
     }
 
     private void KillCounter(Enemy obj)
@@ -43,14 +59,33 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void DeadNatureCounter(FlammableObject obj)
+    {
+        flammables.Remove(obj);
+        onNewDeadTree?.Invoke();
+
+        if (flammables.Count == 0)
+        {
+            LoseGame();
+            gameOverText.text = "THE FOREST WAS DESTROYED!";
+        }
+    }
+
     private void SpawnedEnemy(Enemy obj)
     {
         enemies.Add(obj);
     }
 
+    private void SpawnedFlammable(FlammableObject obj)
+    {
+        flammables.Add(obj);
+        flammablesTotal++;
+    }
+
     private void LoseGame()
     {
         StopGameAndOpenScreens(gameOverScreen, loseGameSoundEffect);
+        gameOverText.text = "YOU DIED!";
     }
 
     private void StopGameAndOpenScreens(GameObject screen, AudioSource soundEffect)

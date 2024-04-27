@@ -25,7 +25,6 @@ public class AfterDeathExplosion : MonoBehaviour
     {
         Instantiate(explosionPrefab, transform.position, transform.rotation);
 
-        // Get all colliders in the explosion radius
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
 
         foreach (Collider hit in colliders)

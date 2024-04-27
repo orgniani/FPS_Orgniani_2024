@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 33222949445572694}
   - component: {fileID: 23050206849376476}
   - component: {fileID: 2079862814997601802}
+  - component: {fileID: 7181213596283515733}
+  - component: {fileID: 3197742923394692647}
   m_Layer: 0
   m_Name: rpgpp_lt_tree_01
   m_TagString: Untagged
@@ -107,3 +109,38 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 7.444212, z: 1}
   m_Center: {x: 0, y: 3.722106, z: -0.03}
+--- !u!114 &7181213596283515733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1612273161005096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc73bdc027c08f64285ae5a2fbfc38f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireParticleSystemPrefab: {fileID: 5458057761587274944, guid: ec70c682e126bf1409fd271762138083,
+    type: 3}
+  HP: {fileID: 0}
+  scorchMark: {fileID: 0}
+  fireYOffset: 0
+  fireDamage: 1
+  recieveDamageCooldown: 2
+--- !u!114 &3197742923394692647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1612273161005096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9881ab8a589d9e4aa68a5b3c2ddce13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bloodSplashPrefab: {fileID: 0}
+  health: 10
+  maxHealth: 10
+  shouldDisappearAfterDeath: 1

@@ -2,8 +2,6 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Rendering.Universal;
-using static UnityEngine.GraphicsBuffer;
 
 public class MeleeAttack : MonoBehaviour, IAttack
 {
@@ -42,6 +40,7 @@ public class MeleeAttack : MonoBehaviour, IAttack
     private void HandleAttack()
     {
         if (!shouldAttack) return;
+        if (playerHP.Health <= 0) return;
         StartCoroutine(AttackSequence());
     }
 

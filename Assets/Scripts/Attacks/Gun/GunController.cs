@@ -1,5 +1,4 @@
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 
 public class GunController : MonoBehaviour
@@ -27,6 +26,7 @@ public class GunController : MonoBehaviour
 
     private void Update()
     {
+        if (!enabled) return;
         UpdateGunSightColor();
     }
 
@@ -54,6 +54,7 @@ public class GunController : MonoBehaviour
     public void Shoot()
     {
         if (Cursor.lockState != CursorLockMode.Locked) return;
+        if (!enabled) return;
 
         gunSmoke.Play();
 
