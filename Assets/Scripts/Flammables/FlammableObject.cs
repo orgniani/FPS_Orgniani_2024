@@ -14,6 +14,8 @@ public class FlammableObject : MonoBehaviour, IFlammable
     [SerializeField] private float fireDamage = 1f;
     [SerializeField] private float recieveDamageCooldown = 1f;
 
+    [SerializeField] private float smokeYOffset = 2f;
+
     private bool shouldLoseHealth = true;
 
     private ParticleSystem instantiatedFire;
@@ -86,7 +88,7 @@ public class FlammableObject : MonoBehaviour, IFlammable
     {
         fireDeath.HandleFireDeath();
 
-        Vector3 smokePosition = new Vector3(transform.position.x, transform.position.y + fireYOffset, transform.position.z);
+        Vector3 smokePosition = new Vector3(transform.position.x, transform.position.y - smokeYOffset, transform.position.z);
         Instantiate(smokeParticleSystemPrefab, smokePosition, Quaternion.identity);
 
         onDeath?.Invoke(this);
