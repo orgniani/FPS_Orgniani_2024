@@ -106,4 +106,12 @@ public class InputReader : MonoBehaviour
             attackSwapController.SwapToFireExtinguisher();
         }
     }
+
+    public void ChangeToHands(InputAction.CallbackContext inputContext)
+    {
+        if (inputContext.started)
+        {
+            attackSwapController.SwapToHands();
+        }
+    }
 }

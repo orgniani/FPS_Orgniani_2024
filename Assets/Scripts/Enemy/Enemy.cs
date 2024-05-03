@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour
     public static event Action<Enemy> onSpawn;
     public static event Action<Enemy> onDeath;
 
-    private enum MovementState { PATROL = 0, FOLLOW, STOP }
+    public enum ENEMYSTATE { PATROL = 0, FOLLOW_TARGET, STOP }
 
     private void Start()
     {

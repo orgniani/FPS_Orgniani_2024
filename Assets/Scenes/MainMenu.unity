@@ -26117,7 +26117,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: GOBLINS' FEAST
+  m_text: GOBLIN PARTY
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 85c5a3cd5d6bb9743a3f99cab5f5b9fe, type: 2}
   m_sharedMaterial: {fileID: -3445219555948326185, guid: 85c5a3cd5d6bb9743a3f99cab5f5b9fe,
@@ -26145,8 +26145,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 107.2
-  m_fontSizeBase: 107.2
+  m_fontSize: 126.58
+  m_fontSizeBase: 126.58
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
