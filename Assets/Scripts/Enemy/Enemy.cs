@@ -11,10 +11,13 @@ public class Enemy : MonoBehaviour
     [SerializeField] private EnemyPatrol patrol;
     [SerializeField] private EnemyArsonist arsonist;
 
+    [SerializeField] private AudioSource deathSound;
+
     private NavMeshAgent agent;
 
     public static event Action<Enemy> onSpawn;
     public static event Action<Enemy> onDeath;
+
 
     public enum ENEMYSTATE { PATROL = 0, FOLLOW_TARGET, STOP }
 
@@ -43,6 +46,8 @@ public class Enemy : MonoBehaviour
 
         agent.isStopped = true;
         enabled = false;
+
+        deathSound.Play();
 
         if (patrol) patrol.enabled = false;
         if (arsonist) arsonist.enabled = false;

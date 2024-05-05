@@ -13,6 +13,8 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private string animatorParameterClose = "close";
     [SerializeField] private float screenAnimationDuration = 1.5f;
 
+    [SerializeField] private AudioSource openScreenSound;
+
     private bool canPause = true;
 
     private void Awake()
@@ -69,6 +71,8 @@ public class MenuManager : MonoBehaviour
             Animator screenAnimator = pauseScreen.GetComponent<Animator>();
             screenAnimator.SetTrigger(animatorParameterClose);
 
+            openScreenSound.Play();
+
             StartCoroutine(PlayAndDeactivate(pauseScreen));
         }
 
@@ -76,6 +80,8 @@ public class MenuManager : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.None;
             pauseScreen.SetActive(true);
+
+            openScreenSound.Play();
 
             StartCoroutine(PlayAndPauseGame());
         }
@@ -91,6 +97,8 @@ public class MenuManager : MonoBehaviour
 
     private IEnumerator PlayAndPauseGame()
     {
+        openScreenSound.Play();
+
         yield return new WaitForSeconds(screenAnimationDuration);
 
         canPause = true;

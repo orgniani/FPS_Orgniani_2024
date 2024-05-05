@@ -19,6 +19,8 @@ public class MeleeAttack : MonoBehaviour, IAttack
 
     [SerializeField] private LayerMask playerLayer;
 
+    [SerializeField] private AudioSource punchSound;
+
     private Transform playerTransform;
     private HealthController playerHP;
 
@@ -89,7 +91,7 @@ public class MeleeAttack : MonoBehaviour, IAttack
         enabled = false;
 
         onPunch?.Invoke();
-        Debug.Log("Attack!");
+        if (punchSound) punchSound.Play();
 
         playerHP.ReceiveDamage(damage, hitPoint);
 

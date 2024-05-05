@@ -16,6 +16,8 @@ public class GunController : MonoBehaviour
     [SerializeField] private Transform gunTip;
     [SerializeField] private ParticleSystem gunSmoke;
 
+    [SerializeField] private AudioSource shotSound;
+
 
     [SerializeField] private LayerMask enemies;
 
@@ -57,6 +59,7 @@ public class GunController : MonoBehaviour
         if (!enabled) return;
 
         gunSmoke.Play();
+        shotSound.Play();
 
         ShotFeedback shotFeedback = Instantiate(shotPrefab, gunTip.position, Quaternion.identity);
 

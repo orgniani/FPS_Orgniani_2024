@@ -3,7 +3,7 @@
 public class FireExtinguisherController : MonoBehaviour
 {
     [SerializeField] private ParticleSystem fireFoam;
-    [SerializeField] private LayerMask fireMask;
+    [SerializeField] private AudioSource extinguishSound;
 
     private bool spray = false;
 
@@ -15,8 +15,15 @@ public class FireExtinguisherController : MonoBehaviour
         spray = isSpraying;
 
         if (spray)
+        {
             fireFoam.Play();
+            extinguishSound.Play();
+        }
+
         else
+        {
             fireFoam.Stop();
+            extinguishSound.Stop();
+        }
     }
 }

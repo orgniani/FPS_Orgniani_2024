@@ -12,6 +12,7 @@ public class EnemyArsonist : MonoBehaviour
 
     [SerializeField] private List<Transform> patrolPoints;
     [SerializeField] private Transform target;
+    [SerializeField] private AudioSource lightOnFireSound;
 
     [Header("Parameters")]
     [SerializeField] private float chaseDuration = 5f;
@@ -131,6 +132,8 @@ public class EnemyArsonist : MonoBehaviour
 
             FlammableObject flammableObject = patrolPoints[currentPatrolPointIndex].GetComponent<FlammableObject>();
             flammableObject.HandleGetLitOnFire();
+
+            if(lightOnFireSound) lightOnFireSound.Play();
 
             SetNextPatrolPoint(distanceToCurrentTarget);
         }

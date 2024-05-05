@@ -22,6 +22,9 @@ public class AttackSwapController : MonoBehaviour
 
     private bool canSwitch = true;
 
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip swapSound;
+
     private void Awake()
     {
         gunInitialPosition = gun.transform.localPosition;
@@ -44,10 +47,12 @@ public class AttackSwapController : MonoBehaviour
             StartCoroutine(AnimateExitSwap(gun));
         }
 
+        else
+        {
+            audioSource.PlayOneShot(swapSound);
+        }
+
         StartCoroutine(AnimateSelectSwap(fireExtinguisher, extinguisherInitialPosition));
-
-        //fireExtinguisherController.enabled = true;
-
     }
 
     public void SwapToGun()
@@ -66,9 +71,12 @@ public class AttackSwapController : MonoBehaviour
             StartCoroutine(AnimateExitSwap(fireExtinguisher));
         }
 
-        StartCoroutine(AnimateSelectSwap(gun, gunInitialPosition));
+        else
+        {
+            audioSource.PlayOneShot(swapSound);
+        }
 
-        //gunController.enabled = true;
+        StartCoroutine(AnimateSelectSwap(gun, gunInitialPosition));
     }
 
     public void SwapToHands()
@@ -97,6 +105,8 @@ public class AttackSwapController : MonoBehaviour
         float elapsedTime = 0f;
         Vector3 initialPosition = weapon.transform.localPosition;
         Vector3 targetPosition = initialPosition - Vector3.up * posYPosition;
+
+        audioSource.PlayOneShot(swapSound);
 
         while (elapsedTime < animationDuration)
         {
@@ -131,7 +141,7 @@ public class AttackSwapController : MonoBehaviour
             yield return null;
         }
 
-        if(weapon == gun)
+        if (weapon == gun)
         {
             gunController.enabled = true;
         }
