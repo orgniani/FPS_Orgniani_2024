@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Audio;
 
 public class MeleeAttack : MonoBehaviour, IAttack
 {
@@ -19,7 +20,8 @@ public class MeleeAttack : MonoBehaviour, IAttack
 
     [SerializeField] private LayerMask playerLayer;
 
-    [SerializeField] private AudioSource punchSound;
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip punchSound;
 
     private Transform playerTransform;
     private HealthController playerHP;
@@ -37,6 +39,7 @@ public class MeleeAttack : MonoBehaviour, IAttack
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void HandleAttack()
@@ -91,7 +94,7 @@ public class MeleeAttack : MonoBehaviour, IAttack
         enabled = false;
 
         onPunch?.Invoke();
-        if (punchSound) punchSound.Play();
+        if (punchSound) audioSource.PlayOneShot(punchSound);
 
         playerHP.ReceiveDamage(damage, hitPoint);
 

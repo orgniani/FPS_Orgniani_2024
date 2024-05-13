@@ -11,64 +11,92 @@ public class Enemy : MonoBehaviour
     [SerializeField] private EnemyPatrol patrol;
     [SerializeField] private EnemyArsonist arsonist;
 
-    [SerializeField] private AudioSource deathSound;
+    [SerializeField] private float passedOutDuration = 10f;
+
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip deathSound;
+    [SerializeField] private AudioClip wakeUpSound;
 
     private NavMeshAgent agent;
+    private bool isAwake = false;
 
     public static event Action<Enemy> onSpawn;
-    public static event Action<Enemy> onDeath;
+    public static event Action<Enemy> onTrapped;
+
+    public static event Action onWakeUp;
+
+    private Coroutine wakeUpCoroutine;
+    private Coroutine enableCoroutine;
 
 
-    public enum ENEMYSTATE { PATROL = 0, FOLLOW_TARGET, STOP }
+    //public enum ENEMYSTATE { PATROL = 0, FOLLOW_TARGET, STOP }
 
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        audioSource = GetComponent<AudioSource>();
 
         onSpawn?.Invoke(this);
     }
 
     private void OnEnable()
     {
-        HP.onHurt += HandleHurt;
-        HP.onDead += HandleDeath;
+        HP.onHurt += HandleKnockedOut;
     }
 
     private void OnDisable()
     {
-        HP.onHurt -= HandleHurt;
-        HP.onDead -= HandleDeath;
+        HP.onHurt -= HandleKnockedOut;
     }
 
-    private void HandleDeath()
+    private void HandleKnockedOut()
     {
-        onDeath?.Invoke(this);
+        if (wakeUpCoroutine != null)
+            StopCoroutine(wakeUpCoroutine);
+        if (enableCoroutine != null)
+            StopCoroutine(enableCoroutine);
 
+        isAwake = false;
         agent.isStopped = true;
-        enabled = false;
 
-        deathSound.Play();
+        audioSource.PlayOneShot(deathSound);
 
         if (patrol) patrol.enabled = false;
         if (arsonist) arsonist.enabled = false;
+
+        wakeUpCoroutine = StartCoroutine(WaitToWakeBackUp());
     }
 
-    private void HandleHurt()
+    private IEnumerator WaitToWakeBackUp()
     {
-        if (HP.Health <= 0) return;
+        yield return new WaitForSeconds(passedOutDuration);
 
-        StartCoroutine(StopMovingAfterHit());
+        onWakeUp?.Invoke();
+        audioSource.PlayOneShot(wakeUpSound);
+        isAwake = true;
+
+        enableCoroutine = StartCoroutine(WaitToEnable());
     }
 
-    private IEnumerator StopMovingAfterHit()
+    private IEnumerator WaitToEnable()
     {
-        agent.isStopped = true;
-        enabled = false;
+        while (!isAwake)
+        {
+            yield return null;
+        }
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1);
 
         agent.isStopped = false;
-        enabled = true;
+
+        if (patrol) patrol.enabled = true;
+        if (arsonist) arsonist.enabled = true;
     }
 
+    public void HandleGetTrapped()
+    {
+        onTrapped?.Invoke(this);
+
+        gameObject.SetActive(false);
+    }
 }

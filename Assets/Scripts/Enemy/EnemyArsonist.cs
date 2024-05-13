@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Audio;
 
 public class EnemyArsonist : MonoBehaviour
 {
@@ -12,7 +13,10 @@ public class EnemyArsonist : MonoBehaviour
 
     [SerializeField] private List<Transform> patrolPoints;
     [SerializeField] private Transform target;
-    [SerializeField] private AudioSource lightOnFireSound;
+
+
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip lightOnFireSound;
 
     [Header("Parameters")]
     [SerializeField] private float chaseDuration = 5f;
@@ -35,6 +39,7 @@ public class EnemyArsonist : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         playerHP = target.gameObject.GetComponent<HealthController>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -84,7 +89,6 @@ public class EnemyArsonist : MonoBehaviour
         {
             if (playerHP.Health <= 0) return;
 
-            //float waitTime = attack.AttackNow();
             attack.AttackNow(target, playerHP);
             agent.SetDestination(target.position);
 
@@ -123,9 +127,6 @@ public class EnemyArsonist : MonoBehaviour
         Vector3 nextPoint = patrolPoints[currentPatrolPointIndex].transform.position;
         float distanceToCurrentTarget = Vector3.Distance(transform.position, patrolPoints[currentPatrolPointIndex].position);
 
-        //Debug.Log(currentPatrolPointIndex);
-        //Debug.Log(distanceToCurrentTarget);
-
         if (distanceToCurrentTarget <= maxDistanceToTarget)
         {
             StartCoroutine(StopAndLight());
@@ -133,7 +134,7 @@ public class EnemyArsonist : MonoBehaviour
             FlammableObject flammableObject = patrolPoints[currentPatrolPointIndex].GetComponent<FlammableObject>();
             flammableObject.HandleGetLitOnFire();
 
-            if(lightOnFireSound) lightOnFireSound.Play();
+            if (lightOnFireSound) audioSource.PlayOneShot(lightOnFireSound);
 
             SetNextPatrolPoint(distanceToCurrentTarget);
         }
@@ -156,9 +157,6 @@ public class EnemyArsonist : MonoBehaviour
 
     private void SetNextPatrolPoint(float distanceToCurrentTarget)
     {
-        //agent.SetDestination(patrolPoints[currentPatrolPointIndex].position);
-        //currentPatrolPointIndex = (currentPatrolPointIndex + 1) % patrolPoints.Count;
-
         if (distanceToCurrentTarget < maxDistanceToTarget)
         {
             currentPatrolPointIndex++;

@@ -16,6 +16,7 @@ public class EnemyAnimatorView : MonoBehaviour
     [SerializeField] private string hurtTriggerParameter = "get_hit";
     [SerializeField] private string lightFireTriggerParameter = "light_fire";
     [SerializeField] private string dieTriggerParameter = "die";
+    [SerializeField] private string wakeUpTriggerParameter = "wake_up";
 
     private void Awake()
     {
@@ -27,6 +28,7 @@ public class EnemyAnimatorView : MonoBehaviour
         attack.onPunch += HandlePunch;
         HP.onHurt += HandleHurt;
         HP.onDead += HandleDeath;
+        Enemy.onWakeUp += HandleWakeUp;
 
         if (arsonist) arsonist.onLightFire += HandleLightFire;
     }
@@ -36,6 +38,7 @@ public class EnemyAnimatorView : MonoBehaviour
         attack.onPunch -= HandlePunch;
         HP.onHurt -= HandleHurt;
         HP.onDead -= HandleDeath;
+        Enemy.onWakeUp -= HandleWakeUp;
 
         if (arsonist) arsonist.onLightFire -= HandleLightFire;
     }
@@ -61,6 +64,11 @@ public class EnemyAnimatorView : MonoBehaviour
     private void HandleDeath()
     {
         animator.SetTrigger(dieTriggerParameter);
+    }
+
+    private void HandleWakeUp()
+    {
+        animator.SetTrigger(wakeUpTriggerParameter);
     }
 
     private void HandleLightFire()

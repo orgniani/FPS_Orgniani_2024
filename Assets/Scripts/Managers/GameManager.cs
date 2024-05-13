@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
         playerHP.onDead += LoseGame;
 
         Enemy.onSpawn += SpawnedEnemy;
-        Enemy.onDeath += KillCounter;
+        Enemy.onTrapped += KillCounter;
 
         FlammableObject.onSpawn += SpawnedFlammable;
         FlammableObject.onDeath += DeadNatureCounter;
@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
         playerHP.onDead -= LoseGame;
 
         Enemy.onSpawn -= SpawnedEnemy;
-        Enemy.onDeath -= KillCounter;
+        Enemy.onTrapped -= KillCounter;
 
         FlammableObject.onSpawn -= SpawnedFlammable;
         FlammableObject.onDeath -= DeadNatureCounter;
