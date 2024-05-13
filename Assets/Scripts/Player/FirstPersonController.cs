@@ -43,10 +43,17 @@ public class FirstPersonController : MonoBehaviour
     private Vector3 setDirection;
 	private Vector2 lookDirection;
 
+    public float Speed { set; get; }
+
+    public bool CanSprint { set; get; }
+
     private void Start()
 	{
 		controller = GetComponent<CharacterController>();
 		characterTargetRot = transform.localRotation;
+
+		CanSprint = true;
+		Speed = moveSpeed;
 
 		if(!look)
 		{
@@ -82,6 +89,12 @@ public class FirstPersonController : MonoBehaviour
 
 	public void Sprint(bool isSprinting)
 	{
+		if(!CanSprint)
+		{
+			sprint = false;
+			return;
+		}
+
 		sprint = isSprinting;
 	}
 
@@ -121,7 +134,7 @@ public class FirstPersonController : MonoBehaviour
         direction = direction.x * transform.right + direction.z * transform.forward;
 
         // set target speed based on move speed, sprint speed and if sprint is pressed
-        float targetSpeed = sprint ? sprintSpeed : moveSpeed;
+        float targetSpeed = sprint ? sprintSpeed : Speed;
 
         // move the player
         controller.Move(direction.normalized * (targetSpeed * Time.deltaTime) + new Vector3(0.0f, verticalVelocity, 0.0f) * Time.deltaTime);

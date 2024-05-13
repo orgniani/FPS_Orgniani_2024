@@ -18,7 +18,6 @@ public class GunController : MonoBehaviour
 
     [SerializeField] private AudioSource shotSound;
 
-
     [SerializeField] private LayerMask enemies;
 
     private float targetDistance;

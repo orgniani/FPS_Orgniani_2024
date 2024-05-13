@@ -66,7 +66,7 @@ public class EnemyAnimatorView : MonoBehaviour
         animator.SetTrigger(dieTriggerParameter);
     }
 
-    private void HandleWakeUp()
+    private void HandleWakeUp(Enemy obj)
     {
         animator.SetTrigger(wakeUpTriggerParameter);
     }

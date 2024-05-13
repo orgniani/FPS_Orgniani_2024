@@ -8,28 +8,19 @@ using UnityEngine.Audio;
 public class EnemyArsonist : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private MeleeAttack attack;
-    [SerializeField] private HealthController HP;
-
     [SerializeField] private List<Transform> patrolPoints;
     [SerializeField] private Transform target;
-
 
     private AudioSource audioSource;
     [SerializeField] private AudioClip lightOnFireSound;
 
     [Header("Parameters")]
-    [SerializeField] private float chaseDuration = 5f;
     [SerializeField] private float maxDistanceToTarget = 5f;
-
     [SerializeField] private float patrolSpeed = 4f;
-    [SerializeField] private float chaseSpeed = 8f;
 
-    private bool playerSpotted = false;
     private bool shouldLightFire = true;
 
     private NavMeshAgent agent;
-    private HealthController playerHP;
 
     private int currentPatrolPointIndex = 0;
 
@@ -38,14 +29,11 @@ public class EnemyArsonist : MonoBehaviour
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        playerHP = target.gameObject.GetComponent<HealthController>();
         audioSource = GetComponent<AudioSource>();
     }
 
     private void OnEnable()
     {
-        HP.onHurt += SpotPlayer;
-
         FlammableObject.onSpawn += LightOnFireTargets;
         FlammableObject.onExtinguished += LightOnFireTargets;
         FlammableObject.onFire += RemoveFromLightOnFire;
@@ -54,8 +42,6 @@ public class EnemyArsonist : MonoBehaviour
 
     private void OnDisable()
     {
-        HP.onHurt -= SpotPlayer;
-
         foreach(Transform point in patrolPoints)
         {
             FlammableObject.onSpawn -= LightOnFireTargets;
@@ -79,39 +65,9 @@ public class EnemyArsonist : MonoBehaviour
 
     private void Update()
     {
-        if (!playerSpotted)
-        {
-            Patrol();
-            agent.speed = patrolSpeed;
-        }
-
-        else
-        {
-            if (playerHP.Health <= 0) return;
-
-            attack.AttackNow(target, playerHP);
-            agent.SetDestination(target.position);
-
-            agent.speed = chaseSpeed;
-        }
+        Patrol();
+        agent.speed = patrolSpeed;
     }
-
-    private void SpotPlayer()
-    {
-        playerSpotted = true;
-        StartCoroutine(ChasePlayer());
-    }
-
-    private IEnumerator ChasePlayer()
-    {
-        agent.isStopped = true;
-
-        yield return new WaitForSeconds(chaseDuration);
-
-        agent.isStopped = false;
-        playerSpotted = false;
-    }
-
 
     private void Patrol()
     {

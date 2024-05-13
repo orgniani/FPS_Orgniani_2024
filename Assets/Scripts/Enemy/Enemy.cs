@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -22,8 +23,8 @@ public class Enemy : MonoBehaviour
 
     public static event Action<Enemy> onSpawn;
     public static event Action<Enemy> onTrapped;
-
-    public static event Action onWakeUp;
+    public static event Action<Enemy> onKnockedOut;
+    public static event Action<Enemy> onWakeUp;
 
     private Coroutine wakeUpCoroutine;
     private Coroutine enableCoroutine;
@@ -56,6 +57,8 @@ public class Enemy : MonoBehaviour
         if (enableCoroutine != null)
             StopCoroutine(enableCoroutine);
 
+        onKnockedOut?.Invoke(this);
+
         isAwake = false;
         agent.isStopped = true;
 
@@ -71,7 +74,9 @@ public class Enemy : MonoBehaviour
     {
         yield return new WaitForSeconds(passedOutDuration);
 
-        onWakeUp?.Invoke();
+        onWakeUp?.Invoke(this);
+        HP.SetToMaxHealth();
+
         audioSource.PlayOneShot(wakeUpSound);
         isAwake = true;
 

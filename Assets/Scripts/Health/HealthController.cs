@@ -14,12 +14,18 @@ public class HealthController : MonoBehaviour, IHittable
     [SerializeField] private bool shouldDisappearAfterDeath = false;
 
     public event Action onHurt = delegate { };
+    public event Action onRevive = delegate { };
     public event Action onDead = delegate { };
 
     public float Health => health;
 
     public float MaxHealth => maxHealth;
 
+    public void SetToMaxHealth()
+    {
+        health = maxHealth;
+        onRevive?.Invoke();
+    }
 
     public void ReceiveDamage(float damage, Vector3 hitPoint)
 	{

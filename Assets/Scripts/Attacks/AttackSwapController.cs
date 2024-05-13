@@ -8,6 +8,7 @@ public class AttackSwapController : MonoBehaviour
     [Header("Controllers")]
     [SerializeField] private GunController gunController;
     [SerializeField] private FireExtinguisherController fireExtinguisherController;
+    [SerializeField] private HandController handController;
 
     [SerializeField] private AnimationCurve animationCurve;
     [SerializeField] private float animationDuration = 2;
@@ -41,7 +42,9 @@ public class AttackSwapController : MonoBehaviour
 
         fireExtinguisher.transform.localPosition -= Vector3.up * posYPosition;
 
-        if(gun.activeSelf)
+        handController.enabled = false;
+
+        if (gun.activeSelf)
         {
             gunController.enabled = false;
             StartCoroutine(AnimateExitSwap(gun));
@@ -49,6 +52,7 @@ public class AttackSwapController : MonoBehaviour
 
         else
         {
+            handController.CanDrag = false;
             audioSource.PlayOneShot(swapSound);
         }
 
@@ -65,7 +69,9 @@ public class AttackSwapController : MonoBehaviour
 
         gun.transform.localPosition -= Vector3.up * posYPosition;
 
-        if(fireExtinguisher.activeSelf)
+        //handController.enabled = false;
+
+        if (fireExtinguisher.activeSelf)
         {
             fireExtinguisherController.enabled = false;
             StartCoroutine(AnimateExitSwap(fireExtinguisher));
@@ -73,6 +79,7 @@ public class AttackSwapController : MonoBehaviour
 
         else
         {
+            handController.CanDrag = false;
             audioSource.PlayOneShot(swapSound);
         }
 
@@ -98,6 +105,8 @@ public class AttackSwapController : MonoBehaviour
             fireExtinguisherController.enabled = false;
             StartCoroutine(AnimateExitSwap(fireExtinguisher));
         }
+
+        handController.CanDrag = true;
     }
 
     private IEnumerator AnimateExitSwap(GameObject weapon)

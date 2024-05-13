@@ -7,6 +7,7 @@ public class InputReader : MonoBehaviour
     [SerializeField] private FirstPersonController playerController;
     [SerializeField] private GunController gun;
     [SerializeField] private FireExtinguisherController fireExtinguisher;
+    [SerializeField] private HandController handController;
     [SerializeField] private MenuManager menuController;
 
     [SerializeField] private AttackSwapController attackSwapController;
@@ -75,11 +76,13 @@ public class InputReader : MonoBehaviour
         {
             gun.Shoot();
             fireExtinguisher.Spray(true);
+            handController.Drag(true);
         }
 
         else if (inputContext.canceled)
         {
             fireExtinguisher.Spray(false);
+            handController.Drag(false);
         }
     }
 
@@ -112,6 +115,14 @@ public class InputReader : MonoBehaviour
         if (inputContext.started)
         {
             attackSwapController.SwapToHands();
+        }
+    }
+
+    public void TrapGoblin(InputAction.CallbackContext inputContext)
+    {
+        if (inputContext.started)
+        {
+            handController.HandleTrapGoblin();
         }
     }
 }
