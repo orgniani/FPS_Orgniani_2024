@@ -60,12 +60,13 @@ public class Enemy : MonoBehaviour
         onKnockedOut?.Invoke(this);
 
         isAwake = false;
-        agent.isStopped = true;
 
         audioSource.PlayOneShot(deathSound);
 
         if (patrol) patrol.enabled = false;
         if (arsonist) arsonist.enabled = false;
+
+        agent.isStopped = true;
 
         wakeUpCoroutine = StartCoroutine(WaitToWakeBackUp());
     }

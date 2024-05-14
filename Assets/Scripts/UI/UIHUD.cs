@@ -6,6 +6,7 @@ public class UIHUD : MonoBehaviour
 {
     [Header("UI References")]
     [SerializeField] private Image gunSight;
+    [SerializeField] private TextMeshProUGUI ammoAmountText;
 
     [SerializeField] private TextMeshProUGUI HPText;
     [SerializeField] private Image healthBar;
@@ -13,11 +14,16 @@ public class UIHUD : MonoBehaviour
     [SerializeField] private TextMeshProUGUI forestHPText;
     [SerializeField] private Image forestHealthBar;
 
+    [SerializeField] private GameObject gunIcon;
+    [SerializeField] private GameObject extinguisherIcon;
+    [SerializeField] private GameObject noneIcon;
+
     [Header("Player References")]
     [SerializeField] private GunController shooting;
     [SerializeField] private FirstPersonController player;
     [SerializeField] private HealthController playerHP;
     [SerializeField] private GameManager gameManager;
+    [SerializeField] private AttackSwapController attackSwapController;
 
     private void OnEnable()
     {
@@ -26,6 +32,14 @@ public class UIHUD : MonoBehaviour
 
         gameManager.onNewDeadTree += HandleForestHPText;
         gameManager.onNewDeadTree += HandleForestHealthBar;
+
+        shooting.onAmmoChange += HandleAmmoAmountText;
+
+        PickUpItems.onPickUp += HandleAddWeaponIcon;
+
+        HandleAmmoAmountText();
+        HandleHealthBar();
+        HandleHPText();
     }
 
     private void OnDisable()
@@ -35,6 +49,8 @@ public class UIHUD : MonoBehaviour
 
         gameManager.onNewDeadTree -= HandleForestHPText;
         gameManager.onNewDeadTree -= HandleForestHealthBar;
+
+        PickUpItems.onPickUp -= HandleAddWeaponIcon;
     }
 
     private void Update()
@@ -78,5 +94,27 @@ public class UIHUD : MonoBehaviour
         Color newColor = shooting.isPointingAtEnemy ? new Color(1, 0, 0, originalColor.a) : new Color(1, 1, 1, originalColor.a);
 
         gunSight.color = newColor;
+    }
+
+    private void HandleAmmoAmountText()
+    {
+        if (!ammoAmountText) return;
+
+        ammoAmountText.text = "x" + shooting.AmmoAmount;
+    }
+
+    private void HandleAddWeaponIcon()
+    {
+        if(attackSwapController.AquiredGun)
+        {
+            gunIcon.SetActive(true);
+        }
+
+        if (attackSwapController.AquiredExtinguisher)
+        {
+            extinguisherIcon.SetActive(true);
+        }
+
+        noneIcon.SetActive(true);
     }
 }

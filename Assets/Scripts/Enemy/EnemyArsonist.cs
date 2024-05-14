@@ -78,7 +78,8 @@ public class EnemyArsonist : MonoBehaviour
             agent.isStopped = true;
             return;
         }
-        else agent.isStopped = false;
+
+        agent.isStopped = false;
 
         Vector3 nextPoint = patrolPoints[currentPatrolPointIndex].transform.position;
         float distanceToCurrentTarget = Vector3.Distance(transform.position, patrolPoints[currentPatrolPointIndex].position);

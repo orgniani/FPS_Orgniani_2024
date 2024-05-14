@@ -55,8 +55,6 @@ public class HandController : MonoBehaviour
         if (Cursor.lockState != CursorLockMode.Locked) return;
         if (!enabled) return;
 
-        //currentlyDraggedEnemy = null;
-
         drag = isDragging;
     }
 
@@ -76,8 +74,6 @@ public class HandController : MonoBehaviour
 
                 if (enemyAgent != null)
                 {
-                    if (enemyAgent == null) return;
-
                     enemyAgent.isStopped = false;
                     enemyAgent.SetDestination(transform.position);
 
@@ -88,20 +84,11 @@ public class HandController : MonoBehaviour
                     currentlyDraggedEnemy = nearestEnemy;
                 }
             }
-
-            else
-            {
-                if (enemyAgent == null) return;
-                enemyAgent.isStopped = true;
-            }
         }
 
         else
         {
             StopDragging();
-
-            if (enemyAgent == null) return;
-            enemyAgent.isStopped = false;
         }
     }
 
@@ -112,6 +99,9 @@ public class HandController : MonoBehaviour
         FPSController.Speed = 4f;
 
         if (currentlyDraggedEnemy != null) currentlyDraggedEnemy = null;
+
+        if (enemyAgent == null) return;
+        enemyAgent.isStopped = true;
 
     }
 

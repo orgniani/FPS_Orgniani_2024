@@ -17,11 +17,6 @@ public class MenuManager : MonoBehaviour
 
     private bool canPause = true;
 
-    private void Awake()
-    {
-        if (Cursor.lockState == CursorLockMode.Locked) return;
-    }
-
     private void Update()
     {
         if (!loadBar) return;
@@ -80,8 +75,6 @@ public class MenuManager : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.None;
             pauseScreen.SetActive(true);
-
-            openScreenSound.Play();
 
             StartCoroutine(PlayAndPauseGame());
         }

@@ -58,6 +58,8 @@ public class EnemyPatrol : MonoBehaviour
 
     private void CheckIfPlayerSpotted()
     {
+        agent.isStopped = false;
+
         bool playerIsTooClose = Physics.CheckSphere(transform.position, proximityRadius, playerLayer);
 
         Vector3 spherePosition = transform.position + transform.forward * offset;
@@ -93,21 +95,10 @@ public class EnemyPatrol : MonoBehaviour
             {
                 if (playerSpotted)
                 {
-                    StartCoroutine(StopAndWait());
                     playerSpotted = false;
                 }
             }
         }
-
-    }
-
-    private IEnumerator StopAndWait()
-    {
-        agent.isStopped = true;
-
-        yield return new WaitForSeconds(stopAndWaitTime);
-
-        agent.isStopped = false;
     }
 
     private void Patrol()

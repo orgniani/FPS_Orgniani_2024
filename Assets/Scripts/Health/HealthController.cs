@@ -38,6 +38,18 @@ public class HealthController : MonoBehaviour, IHittable
 			Die();
 	}
 
+    public void RestoreHP(float restoredHealth)
+    {
+        health += restoredHealth;
+
+        if (health >= maxHealth)
+        {
+            health = maxHealth;
+        }
+
+        onHurt?.Invoke();
+    }
+
     private void CreateBloodSplash(Vector3 hitPoint)
     {
         if (!bloodSplashPrefab) return;

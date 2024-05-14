@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 
@@ -7,6 +8,9 @@ public class GunController : MonoBehaviour
     [SerializeField] private Vector3 offset;
     [SerializeField] private float gunDamage = 10f;
     [SerializeField] private float gunRange = 10f;
+
+    [SerializeField] private float ammoAmount = 2f;
+    [SerializeField] private float maxAmmoAmount = 5f;
 
     public bool isPointingAtEnemy = false;
 
@@ -24,6 +28,12 @@ public class GunController : MonoBehaviour
 
     private HealthController targetHP;
     private Vector3 hitPoint;
+
+    public event Action onAmmoChange = delegate { };
+
+    public float AmmoAmount => ammoAmount;
+    public float MaxAmmoAmount => maxAmmoAmount;
+
 
     private void Update()
     {
@@ -57,11 +67,15 @@ public class GunController : MonoBehaviour
         if (Cursor.lockState != CursorLockMode.Locked) return;
         if (!enabled) return;
 
+        if (ammoAmount <= 0) return;
+
+        ammoAmount--;
+        onAmmoChange?.Invoke();
+
         gunSmoke.Play();
         shotSound.Play();
 
         ShotFeedback shotFeedback = Instantiate(shotPrefab, gunTip.position, Quaternion.identity);
-
 
         Vector3 endPosition = gunTip.position + gunTip.forward * gunRange;
 
@@ -75,6 +89,11 @@ public class GunController : MonoBehaviour
         {
             shotFeedback.ShowShotDirection(endPosition);
         }
+    }
 
+    public void ReplenishAmmo()
+    {
+        ammoAmount = maxAmmoAmount;
+        onAmmoChange?.Invoke();
     }
 }

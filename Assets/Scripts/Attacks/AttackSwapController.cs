@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Security.Cryptography;
 using UnityEngine;
@@ -26,6 +27,9 @@ public class AttackSwapController : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip swapSound;
 
+    public bool AquiredExtinguisher { get; set; }
+    public bool AquiredGun { get; set; }
+
     private void Awake()
     {
         gunInitialPosition = gun.transform.localPosition;
@@ -34,6 +38,8 @@ public class AttackSwapController : MonoBehaviour
 
     public void SwapToFireExtinguisher()
     {
+        if (!AquiredExtinguisher) return;
+
         if (!canSwitch) return;
 
         if (fireExtinguisher.activeSelf) return;
@@ -59,6 +65,8 @@ public class AttackSwapController : MonoBehaviour
 
     public void SwapToGun()
     {
+        if (!AquiredGun) return;
+
         if (!canSwitch) return;
 
         if (gun.activeSelf) return;
