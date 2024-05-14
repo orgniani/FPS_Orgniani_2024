@@ -149,11 +149,13 @@ public class HandController : MonoBehaviour
         if (!IsAtTheDoor || currentlyDraggedEnemy == null) return;
 
         Enemy enemyScript = currentlyDraggedEnemy.GetComponent<Enemy>();
+
         if (enemyScript != null)
         {
             enemyScript.HandleGetTrapped();
         }
 
         enemyAgent = null;
+        isDraggingEnemy = false;
     }
 }

@@ -25,6 +25,16 @@ public class Building : MonoBehaviour
     private void Update()
     {
         StartCoroutine(Pulse());
+
+        if (handController.IsDraggingEnemy && handController.IsAtTheDoor)
+        {
+            instructionsCanvas.SetActive(true);
+        }
+
+        else
+        {
+            instructionsCanvas.SetActive(false);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -36,12 +46,6 @@ public class Building : MonoBehaviour
             {
                 Debug.Log("Player is holding a goblin!");
                 handController.IsAtTheDoor = true;
-                instructionsCanvas.SetActive(true);
-            }
-
-            else
-            {
-                instructionsCanvas.SetActive(false);
             }
         }
     }
@@ -51,7 +55,6 @@ public class Building : MonoBehaviour
         if (playerLayer == (playerLayer | (1 << other.gameObject.layer)))
         {
             Debug.Log("Player left the door!");
-            instructionsCanvas.SetActive(false);
             handController.IsAtTheDoor = false;
         }
     }

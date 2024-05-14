@@ -42,8 +42,6 @@ public class AttackSwapController : MonoBehaviour
 
         fireExtinguisher.transform.localPosition -= Vector3.up * posYPosition;
 
-        handController.enabled = false;
-
         if (gun.activeSelf)
         {
             gunController.enabled = false;
@@ -68,8 +66,6 @@ public class AttackSwapController : MonoBehaviour
         canSwitch = false;
 
         gun.transform.localPosition -= Vector3.up * posYPosition;
-
-        //handController.enabled = false;
 
         if (fireExtinguisher.activeSelf)
         {
