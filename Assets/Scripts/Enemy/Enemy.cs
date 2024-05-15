@@ -26,9 +26,10 @@ public class Enemy : MonoBehaviour
     public static event Action<Enemy> onKnockedOut;
     public static event Action<Enemy> onWakeUp;
 
+    public event Action onWakeUpAnimation;
+
     private Coroutine wakeUpCoroutine;
     private Coroutine enableCoroutine;
-
 
     //public enum ENEMYSTATE { PATROL = 0, FOLLOW_TARGET, STOP }
 
@@ -76,6 +77,8 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(passedOutDuration);
 
         onWakeUp?.Invoke(this);
+        onWakeUpAnimation?.Invoke();
+
         HP.SetToMaxHealth();
 
         audioSource.PlayOneShot(wakeUpSound);

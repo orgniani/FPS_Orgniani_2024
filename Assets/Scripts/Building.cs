@@ -41,10 +41,8 @@ public class Building : MonoBehaviour
     {
         if (playerLayer == (playerLayer | (1 << other.gameObject.layer)))
         {
-            Debug.Log("Player is at the door!");
             if (handController.IsDraggingEnemy)
             {
-                Debug.Log("Player is holding a goblin!");
                 handController.IsAtTheDoor = true;
             }
         }
@@ -54,7 +52,6 @@ public class Building : MonoBehaviour
     {
         if (playerLayer == (playerLayer | (1 << other.gameObject.layer)))
         {
-            Debug.Log("Player left the door!");
             handController.IsAtTheDoor = false;
         }
     }

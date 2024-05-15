@@ -1,20 +1,42 @@
 fileFormatVersion: 2
-guid: d075acd8865fffe4e9475ceead36c4c9
+guid: 6520c6d7889f4c72b416f07f34edd515
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2100000: lambert1
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: pCylinder1
+    100000: Body
+    100002: BottomEyeCover
+    100004: Crown
+    100006: EyeBall
+    100008: EyeCTRL
+    100010: Head
+    100012: //RootNode
+    100014: Side_L
+    100016: Side_R
+    100018: Slime
+    100020: Spine01
+    100022: UpperEyeCover
+    400000: Body
+    400002: BottomEyeCover
+    400004: Crown
+    400006: EyeBall
+    400008: EyeCTRL
+    400010: Head
+    400012: //RootNode
+    400014: Side_L
+    400016: Side_R
+    400018: Slime
+    400020: Spine01
+    400022: UpperEyeCover
+    4300000: Slime
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: Slime
   externalObjects: {}
   materials:
     importMaterials: 0
     materialName: 0
     materialSearch: 1
-    materialLocation: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -44,10 +66,10 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
-    importVisibility: 1
+    importVisibility: 0
     importBlendShapes: 1
-    importCameras: 1
-    importLights: 1
+    importCameras: 0
+    importLights: 0
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
@@ -55,14 +77,14 @@ ModelImporter:
     keepQuads: 0
     weldVertices: 1
     preserveHierarchy: 0
-    indexFormat: 0
+    indexFormat: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 0
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -89,7 +111,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
@@ -97,8 +119,8 @@ ModelImporter:
   assetBundleVariant: 
 AssetOrigin:
   serializedVersion: 1
-  productId: 195698
-  packageName: Party Monster Duo Polyart PBR
-  packageVersion: 1.2
-  assetPath: Assets/PartyMonsterDuo/Mesh/StageMesh.fbx
-  uploadId: 441838
+  productId: 157762
+  packageName: RPG Monster Duo PBR Polyart
+  packageVersion: 1.5
+  assetPath: Assets/RPG Monster DUO PBR Polyart/Meshes/SlimeMesh.fbx
+  uploadId: 602007

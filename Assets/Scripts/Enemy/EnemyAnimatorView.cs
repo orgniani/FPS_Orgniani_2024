@@ -7,6 +7,7 @@ public class EnemyAnimatorView : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private MeleeAttack attack;
     [SerializeField] private EnemyArsonist arsonist;
+    [SerializeField] private Enemy enemy;
     [SerializeField] private HealthController HP;
     [SerializeField] private NavMeshAgent agent;
 
@@ -28,7 +29,7 @@ public class EnemyAnimatorView : MonoBehaviour
         attack.onPunch += HandlePunch;
         HP.onHurt += HandleHurt;
         HP.onDead += HandleDeath;
-        Enemy.onWakeUp += HandleWakeUp;
+        enemy.onWakeUpAnimation += HandleWakeUp;
 
         if (arsonist) arsonist.onLightFire += HandleLightFire;
     }
@@ -38,7 +39,7 @@ public class EnemyAnimatorView : MonoBehaviour
         attack.onPunch -= HandlePunch;
         HP.onHurt -= HandleHurt;
         HP.onDead -= HandleDeath;
-        Enemy.onWakeUp -= HandleWakeUp;
+        enemy.onWakeUpAnimation -= HandleWakeUp;
 
         if (arsonist) arsonist.onLightFire -= HandleLightFire;
     }
@@ -66,7 +67,7 @@ public class EnemyAnimatorView : MonoBehaviour
         animator.SetTrigger(dieTriggerParameter);
     }
 
-    private void HandleWakeUp(Enemy obj)
+    private void HandleWakeUp()
     {
         animator.SetTrigger(wakeUpTriggerParameter);
     }

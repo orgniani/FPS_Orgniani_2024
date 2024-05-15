@@ -15,7 +15,6 @@ public class UISplashScreen : MonoBehaviour
         }
         else
         {
-            // If shown before, directly activate the main menu
             mainMenu.SetActive(true);
             gameObject.SetActive(false);
         }
