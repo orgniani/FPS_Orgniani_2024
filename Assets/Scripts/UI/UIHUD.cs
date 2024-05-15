@@ -108,6 +108,7 @@ public class UIHUD : MonoBehaviour
         if(attackSwapController.AquiredGun)
         {
             gunIcon.SetActive(true);
+            gunSight.gameObject.SetActive(true);
         }
 
         if (attackSwapController.AquiredExtinguisher)
