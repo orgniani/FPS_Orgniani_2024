@@ -20,8 +20,6 @@ public class EnemyPatrol : MonoBehaviour
     [SerializeField] private float proximityRadius = 5f;
     [SerializeField] private float fieldOfViewAngle = 90f;
 
-    [SerializeField] private float stopAndWaitTime = 1f;
-
     private bool playerSpotted = false;
 
     private NavMeshAgent agent;

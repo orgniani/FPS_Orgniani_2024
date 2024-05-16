@@ -9,6 +9,8 @@ public class HandController : MonoBehaviour
     [SerializeField] private float proximityRadius = 5f;
     [SerializeField] private float dragSpeed = 2f;
 
+    [SerializeField] private AudioSource trapGoblinSound;
+
     public List<Transform> knockedOutEnemies;
     private NavMeshAgent enemyAgent;
 
@@ -142,6 +144,7 @@ public class HandController : MonoBehaviour
 
         if (enemyScript != null)
         {
+            trapGoblinSound.Play();
             enemyScript.HandleGetTrapped();
         }
 

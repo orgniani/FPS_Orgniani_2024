@@ -20,30 +20,26 @@ public class PickUpItems : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip pickUpItemSound;
 
-    [Header("Glow animation parameters")]
+    [Header("Arrow animation parameters")]
     [SerializeField] private AnimationCurve animationCurve;
+    [SerializeField] private GameObject arrow;
+
     [SerializeField] private float animationDuration = 2f;
-
-    [SerializeField] private Color glowColor = Color.white;
-    [SerializeField] private float maxGlowIntensity = 0.3f;
-
-    [SerializeField] private Material sharedMaterial;
+    [SerializeField] private float posYPosition = 1f;
+    private Vector3 initialPosition;
 
     public static event Action onPickUp;
 
     private void Start()
     {
-        if (sharedMaterial == null) return;
+        if(arrow == null)
+        {
+            enabled = false;
+            return;
+        }
 
-        StartCoroutine(Glow());
-        sharedMaterial.DisableKeyword("_EMISSION");
-    }
-
-    private void OnDisable()
-    {
-        if (sharedMaterial == null) return;
-
-        sharedMaterial.DisableKeyword("_EMISSION");
+        initialPosition = arrow.transform.position;
+        StartCoroutine(Float());
     }
 
     private void OnTriggerEnter(Collider other)
@@ -78,7 +74,6 @@ public class PickUpItems : MonoBehaviour
 
                     onPickUp?.Invoke();
 
-                    StopGlow();
                     gameObject.SetActive(false);
                     break;
 
@@ -89,47 +84,33 @@ public class PickUpItems : MonoBehaviour
 
                     onPickUp?.Invoke();
 
-                    StopGlow();
                     gameObject.SetActive(false);
                     break;
             }
         }
     }
 
-    private void StopGlow()
-    {
-        StopCoroutine(Glow());
-        sharedMaterial.DisableKeyword("_EMISSION");
-    }
 
-    private IEnumerator Glow()
+    private IEnumerator Float()
     {
         while (true)
         {
-            yield return AnimateIntensity(0f, maxGlowIntensity);
+            float elapsedTime = 0f;
+            while (elapsedTime < animationDuration)
+            {
+                float t = elapsedTime / animationDuration;
+                float curveValue = animationCurve.Evaluate(t);
 
-            yield return AnimateIntensity(maxGlowIntensity, 0f);
-        }
-    }
+                Vector3 targetPosition = initialPosition + Vector3.up * posYPosition * curveValue;
 
-    private IEnumerator AnimateIntensity(float startIntensity, float endIntensity)
-    {
-        float elapsedTime = 0f;
+                arrow.transform.position = Vector3.Lerp(arrow.transform.position, targetPosition, Time.deltaTime);
 
-        while (elapsedTime < animationDuration)
-        {
-            float t = elapsedTime / animationDuration;
-            float curveValue = Mathf.Lerp(startIntensity, endIntensity, animationCurve.Evaluate(t));
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
 
-            Color finalColor = glowColor * curveValue;
-            sharedMaterial.SetColor("_EmissionColor", finalColor);
-
-            sharedMaterial.EnableKeyword("_EMISSION");
-
-            elapsedTime += Time.deltaTime;
-            yield return null;
+            posYPosition = -posYPosition;
         }
 
-        sharedMaterial.DisableKeyword("_EMISSION");
     }
 }
