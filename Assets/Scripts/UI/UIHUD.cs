@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -5,15 +6,24 @@ using UnityEngine.UI;
 public class UIHUD : MonoBehaviour
 {
     [Header("UI References")]
+    [Header("Gun")]
     [SerializeField] private Image gunSight;
     [SerializeField] private TextMeshProUGUI ammoAmountText;
 
+    [Header("Health")]
     [SerializeField] private TextMeshProUGUI HPText;
     [SerializeField] private Image healthBar;
 
+    [Header("Bloody Screen")]
+    [SerializeField] private Image bloodScreen;
+    [SerializeField] private float bloodScreenFadeDuration = 1.0f;
+    [SerializeField] private AnimationCurve bloodScreenFadeCurve;
+
+    [Header("Forest")]
     [SerializeField] private TextMeshProUGUI forestHPText;
     [SerializeField] private Image forestHealthBar;
 
+    [Header("Weapon Icons")]
     [SerializeField] private GameObject gunIcon;
     [SerializeField] private GameObject extinguisherIcon;
     [SerializeField] private GameObject noneIcon;
@@ -27,8 +37,9 @@ public class UIHUD : MonoBehaviour
 
     private void OnEnable()
     {
-        playerHP.onHurt += HandleHPText;
-        playerHP.onHurt += HandleHealthBar;
+        playerHP.onHPChange += HandleHPText;
+        playerHP.onHPChange += HandleHealthBar;
+        playerHP.onHurt += HandleBloodOnScreen;
 
         gameManager.onNewDeadTree += HandleForestHPText;
         gameManager.onNewDeadTree += HandleForestHealthBar;
@@ -44,8 +55,9 @@ public class UIHUD : MonoBehaviour
 
     private void OnDisable()
     {
-        playerHP.onHurt -= HandleHPText;
-        playerHP.onHurt -= HandleHealthBar;
+        playerHP.onHPChange -= HandleHPText;
+        playerHP.onHPChange -= HandleHealthBar;
+        playerHP.onHurt -= HandleBloodOnScreen;
 
         gameManager.onNewDeadTree -= HandleForestHPText;
         gameManager.onNewDeadTree -= HandleForestHealthBar;
@@ -68,6 +80,34 @@ public class UIHUD : MonoBehaviour
     {
         if (!healthBar) return;
         healthBar.fillAmount = 1.0f * playerHP.Health / playerHP.MaxHealth;
+    }
+
+    private void HandleBloodOnScreen()
+    {
+        if (!bloodScreen) return;
+
+        bloodScreen.gameObject.SetActive(true);
+        StartCoroutine(FadeOutBloodScreen());
+    }
+
+    private IEnumerator FadeOutBloodScreen()
+    {
+        float elapsedTime = 0;
+        Color originalColor = bloodScreen.color;
+
+        while (elapsedTime < bloodScreenFadeDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / bloodScreenFadeDuration;
+            float curveValue = bloodScreenFadeCurve.Evaluate(t);
+
+            Color newColor = new Color(originalColor.r, originalColor.g, originalColor.b, 1 - curveValue);
+            bloodScreen.color = newColor;
+
+            yield return null;
+        }
+
+        bloodScreen.gameObject.SetActive(false);
     }
 
     private void HandleForestHPText()

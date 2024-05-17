@@ -15,9 +15,6 @@ public class MeleeAttack : MonoBehaviour, IAttack
     [SerializeField] private float fieldOfAttackAngle = 90f;
     [SerializeField] private float offset = 0.5f;
 
-    [SerializeField] private float maxStoppingDistance = 2f;
-    [SerializeField] private float minStoppingDistance = 1f;
-
     [SerializeField] private LayerMask playerLayer;
 
     private AudioSource audioSource;
@@ -28,8 +25,6 @@ public class MeleeAttack : MonoBehaviour, IAttack
 
     private bool shouldAttack = true;
 
-    private NavMeshAgent agent;
-
     private Vector3 hitPoint;
 
     private float occupiedTimeAfterAttack = 1;
@@ -38,7 +33,6 @@ public class MeleeAttack : MonoBehaviour, IAttack
 
     private void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -59,49 +53,26 @@ public class MeleeAttack : MonoBehaviour, IAttack
         Vector3 directionToPlayer = playerTransform.position - transform.position;
         float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
 
-        if (angleToPlayer < fieldOfAttackAngle)
-        {
-            //Debug.Log("IN ANGLE" + angleToPlayer);
-            agent.stoppingDistance = maxStoppingDistance;
-
-            if (playerIsInAttackRange)
-            {
-                RaycastHit hit;
-                Vector3 sourcePos = transform.position;
-
-                Physics.Raycast(sourcePos, transform.forward, out hit, attackProximity, playerLayer);
-                hitPoint = hit.point;
-
-                StartCoroutine(StopToPunch());
-            }
-        }
-
-        else
-        {
-            //Debug.Log("OUT OF ANGLE" + angleToPlayer);
-            agent.stoppingDistance = minStoppingDistance;
-        }
-
+        if (angleToPlayer < fieldOfAttackAngle && playerIsInAttackRange)
+            Punch();
 
         yield return new WaitForSeconds(attackCooldown);
 
         shouldAttack = true;
     }
 
-    private IEnumerator StopToPunch()
+    private void Punch()
     {
-        agent.isStopped = true;
-        enabled = false;
+        RaycastHit hit;
+        Vector3 sourcePos = transform.position;
+
+        Physics.Raycast(sourcePos, transform.forward, out hit, attackProximity, playerLayer);
+        hitPoint = hit.point;
 
         onPunch?.Invoke();
         if (punchSound) audioSource.PlayOneShot(punchSound);
 
         playerHP.ReceiveDamage(damage, hitPoint);
-
-        yield return new WaitForSeconds(0.5f);
-
-        agent.isStopped = false;
-        enabled = true;
     }
 
     public float AttackNow(Transform target, HealthController targetHP)

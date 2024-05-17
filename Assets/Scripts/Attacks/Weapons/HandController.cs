@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -18,6 +18,8 @@ public class HandController : MonoBehaviour
 
     private bool drag = false;
     private bool isDraggingEnemy = false;
+
+    public event Action onClick = delegate { };
 
     public bool IsDraggingEnemy => isDraggingEnemy;
 
@@ -56,6 +58,8 @@ public class HandController : MonoBehaviour
     {
         if (Cursor.lockState != CursorLockMode.Locked) return;
         if (!enabled) return;
+
+        onClick?.Invoke();
 
         drag = isDragging;
     }

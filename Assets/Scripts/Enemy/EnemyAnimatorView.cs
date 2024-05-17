@@ -27,7 +27,7 @@ public class EnemyAnimatorView : MonoBehaviour
     private void OnEnable()
     {
         attack.onPunch += HandlePunch;
-        HP.onHurt += HandleHurt;
+        HP.onHPChange += HandleHurt;
         HP.onDead += HandleDeath;
         enemy.onWakeUpAnimation += HandleWakeUp;
 
@@ -37,7 +37,7 @@ public class EnemyAnimatorView : MonoBehaviour
     private void OnDisable()
     {
         attack.onPunch -= HandlePunch;
-        HP.onHurt -= HandleHurt;
+        HP.onHPChange -= HandleHurt;
         HP.onDead -= HandleDeath;
         enemy.onWakeUpAnimation -= HandleWakeUp;
 

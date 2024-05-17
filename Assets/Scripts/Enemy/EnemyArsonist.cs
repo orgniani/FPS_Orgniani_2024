@@ -16,7 +16,6 @@ public class EnemyArsonist : MonoBehaviour
 
     [Header("Parameters")]
     [SerializeField] private float maxDistanceToTarget = 5f;
-    [SerializeField] private float patrolSpeed = 4f;
 
     private bool shouldLightFire = true;
 
@@ -66,7 +65,6 @@ public class EnemyArsonist : MonoBehaviour
     private void Update()
     {
         Patrol();
-        agent.speed = patrolSpeed;
     }
 
     private void Patrol()

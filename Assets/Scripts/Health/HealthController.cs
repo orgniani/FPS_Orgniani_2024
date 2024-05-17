@@ -13,9 +13,10 @@ public class HealthController : MonoBehaviour, IHittable
 
     [SerializeField] private bool shouldDisappearAfterDeath = false;
 
-    public event Action onHurt = delegate { };
+    public event Action onHPChange = delegate { };
     public event Action onRevive = delegate { };
     public event Action onDead = delegate { };
+    public event Action onHurt = delegate { };
 
     public float Health => health;
 
@@ -30,6 +31,8 @@ public class HealthController : MonoBehaviour, IHittable
     public void ReceiveDamage(float damage, Vector3 hitPoint)
 	{
 		health -= damage;
+        onHPChange?.Invoke();
+
         onHurt?.Invoke();
 
         CreateBloodSplash(hitPoint);
@@ -47,7 +50,7 @@ public class HealthController : MonoBehaviour, IHittable
             health = maxHealth;
         }
 
-        onHurt?.Invoke();
+        onHPChange?.Invoke();
     }
 
     private void CreateBloodSplash(Vector3 hitPoint)

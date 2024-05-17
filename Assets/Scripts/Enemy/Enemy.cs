@@ -43,12 +43,12 @@ public class Enemy : MonoBehaviour
 
     private void OnEnable()
     {
-        HP.onHurt += HandleKnockedOut;
+        HP.onHPChange += HandleKnockedOut;
     }
 
     private void OnDisable()
     {
-        HP.onHurt -= HandleKnockedOut;
+        HP.onHPChange -= HandleKnockedOut;
     }
 
     private void HandleKnockedOut()

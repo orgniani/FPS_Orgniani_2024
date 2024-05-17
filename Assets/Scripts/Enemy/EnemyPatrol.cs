@@ -20,37 +20,42 @@ public class EnemyPatrol : MonoBehaviour
     [SerializeField] private float proximityRadius = 5f;
     [SerializeField] private float fieldOfViewAngle = 90f;
 
-    private bool playerSpotted = false;
-
     private NavMeshAgent agent;
     private HealthController playerHP;
 
     private int currentPatrolPointIndex = 0;
 
-    private enum MovementState { PATROL = 0, FOLLOW, STOP }
+    private enum MovementState { PATROL = 0, FOLLOWTARGET }
+    private MovementState movementState;
 
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         playerHP = target.gameObject.GetComponent<HealthController>();
+
+        movementState = MovementState.PATROL;
     }
 
     private void Update()
     {
         CheckIfPlayerSpotted();
 
-        if (!playerSpotted)
+        switch (movementState)
         {
-            Patrol();
-        }
+            case MovementState.PATROL:
+                agent.isStopped = false;
+                Patrol();
+                break;
 
-        else
-        {
-            if (playerHP.Health <= 0) return;
+            case MovementState.FOLLOWTARGET:
+                if (playerHP.Health <= 0) return;
 
-            //float waitTime = attack.AttackNow();
-            attack.AttackNow(target, playerHP);
-            agent.SetDestination(target.position);
+                attack.AttackNow(target, playerHP);
+                agent.SetDestination(target.position);
+                break;
+
+            default:
+                break;
         }
     }
 
@@ -66,36 +71,34 @@ public class EnemyPatrol : MonoBehaviour
         Vector3 directionToPlayer = target.position - transform.position;
         float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
 
-        if (playerIsTooClose) playerSpotted = true;
+        if (playerIsTooClose)
+        {
+            movementState = MovementState.FOLLOWTARGET;
+            return;
+        }
+
+        if (playerIsInVisionRange && angleToPlayer < fieldOfViewAngle * 0.5f)
+        {
+            RaycastHit hit;
+
+            if (movementState == MovementState.PATROL)
+            {
+                if (Physics.Raycast(transform.position, directionToPlayer, out hit, visionRadius * 2f, ~playerLayer))
+                {
+                    movementState = MovementState.PATROL;
+                }
+
+                else
+                {
+                    movementState = MovementState.FOLLOWTARGET;
+
+                }
+            }
+        }
 
         else
         {
-            if (playerIsInVisionRange && angleToPlayer < fieldOfViewAngle * 0.5f)
-            {
-                RaycastHit hit;
-
-                if (!playerSpotted)
-                {
-                    if (Physics.Raycast(transform.position, directionToPlayer, out hit, visionRadius * 2f, ~playerLayer))
-                    {
-                        playerSpotted = false;
-                    }
-
-                    else
-                    {
-                        playerSpotted = true;
-
-                    }
-                }
-            }
-
-            else
-            {
-                if (playerSpotted)
-                {
-                    playerSpotted = false;
-                }
-            }
+            movementState = MovementState.PATROL;
         }
     }
 
@@ -113,7 +116,7 @@ public class EnemyPatrol : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = playerSpotted ? Color.red : Color.green;
+        Gizmos.color = (movementState == MovementState.FOLLOWTARGET) ? Color.red : Color.green;
         Gizmos.DrawWireSphere(transform.position + transform.forward * offset, visionRadius);
 
         Gizmos.DrawWireSphere(transform.position, proximityRadius);
