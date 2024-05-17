@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private HealthController HP;
+    [SerializeField] private HealthController targetHP;
 
     [SerializeField] private EnemyPatrol patrol;
     [SerializeField] private EnemyArsonist arsonist;
@@ -44,11 +45,13 @@ public class Enemy : MonoBehaviour
     private void OnEnable()
     {
         HP.onHPChange += HandleKnockedOut;
+        targetHP.onDead += HandleStopMoving;
     }
 
     private void OnDisable()
     {
         HP.onHPChange -= HandleKnockedOut;
+        targetHP.onDead -= HandleStopMoving;
     }
 
     private void HandleKnockedOut()
@@ -107,5 +110,12 @@ public class Enemy : MonoBehaviour
         onTrapped?.Invoke(this);
 
         gameObject.SetActive(false);
+    }
+
+    private void HandleStopMoving()
+    {
+        if (patrol) patrol.enabled = false;
+        if (arsonist) arsonist.enabled = false;
+        enabled = false;
     }
 }

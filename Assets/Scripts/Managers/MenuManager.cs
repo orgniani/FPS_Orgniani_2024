@@ -8,6 +8,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private LevelManager levelManager;
     [SerializeField] private GameObject pauseScreen;
     [SerializeField] private Slider loadBar;
+    [SerializeField] private HealthController playerHP;
 
     [Header("Screen Animation Parameters")]
     [SerializeField] private string animatorParameterClose = "close";
@@ -88,11 +89,16 @@ public class MenuManager : MonoBehaviour
         screen.SetActive(false);
     }
 
-    private IEnumerator PlayAndPauseGame()
+    public IEnumerator PlayAndPauseGame()
     {
         openScreenSound.Play();
 
         yield return new WaitForSeconds(screenAnimationDuration);
+
+        if(playerHP != null)
+        {
+            if (playerHP.Health <= 0) yield break;
+        }
 
         canPause = true;
         Time.timeScale = 0;

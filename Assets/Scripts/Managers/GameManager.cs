@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class GameManager : MonoBehaviour
 {
@@ -95,12 +96,9 @@ public class GameManager : MonoBehaviour
         soundEffect.Play();
         screen.SetActive(true);
 
-        foreach(Enemy enemy in enemies)
-        {
-            enemy.enabled = false;
-        }
-
         inputReader.gameObject.SetActive(false);
         timeCounter.StopCounting();
+
+        enabled = false;
     }
 }

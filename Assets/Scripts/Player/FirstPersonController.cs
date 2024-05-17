@@ -47,8 +47,13 @@ public class FirstPersonController : MonoBehaviour
 
     public bool CanSprint { set; get; }
 
+	public enum MovementState { WALKING = 0, SPRINTING, IDLE }
+	public MovementState movementState;
+
     private void Start()
 	{
+		movementState = MovementState.IDLE;
+
 		controller = GetComponent<CharacterController>();
 		characterTargetRot = transform.localRotation;
 
@@ -112,18 +117,11 @@ public class FirstPersonController : MonoBehaviour
     private void JumpAndGravity()
 	{
 		if (grounded && jump)
-		{
-			// the square root of H * -2 * G = how much velocity needed to reach desired height
-			verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
-		}
-		else
-		{
-			// if we are not grounded, do not jump
-			jump = false;
-		}
+            verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        else
+            jump = false;
 
-		// apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
-		if (verticalVelocity < terminalVelocity)
+        if (verticalVelocity < terminalVelocity)
 			verticalVelocity += gravity * Time.deltaTime;
 	}
 
@@ -132,11 +130,11 @@ public class FirstPersonController : MonoBehaviour
 		Vector3 direction = new Vector3(setDirection.x, 0, setDirection.z);
 
         direction = direction.x * transform.right + direction.z * transform.forward;
-
-        // set target speed based on move speed, sprint speed and if sprint is pressed
         float targetSpeed = sprint ? sprintSpeed : Speed;
 
-        // move the player
+        movementState = sprint ? MovementState.SPRINTING : MovementState.WALKING;
+		if (direction == Vector3.zero || !grounded) movementState = MovementState.IDLE;
+
         controller.Move(direction.normalized * (targetSpeed * Time.deltaTime) + new Vector3(0.0f, verticalVelocity, 0.0f) * Time.deltaTime);
     }
 
