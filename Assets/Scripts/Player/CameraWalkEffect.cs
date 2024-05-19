@@ -1,30 +1,33 @@
 using System.Collections;
-using TMPro;
 using UnityEngine;
 
 public class CameraWalkEffect : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private FirstPersonController FPSController;
-
     [SerializeField] private AnimationCurve bobbingCurve;
 
+    [Header("Walking animation parameters")]
     [SerializeField] private float walkingBobbingSpeed = 3f;
-    [SerializeField] private float sprintingBobbingSpeed = 5f;
-
     [SerializeField] private float walkBobbingAmount = 0.5f;
+
+    [Header("Sprinting animation parameters")]
+    [SerializeField] private float sprintingBobbingSpeed = 5f;
     [SerializeField] private float sprintBobbingAmount = 1f;
 
+    [Header("Stop animation parameters")]
     [SerializeField] private float smoothTime = 0.1f;
 
+    [Header("Audio")]
     [SerializeField] private AudioClip stepSound;
     [SerializeField] private float soundVolume = 0.2f;
 
     private AudioSource audioSource;
-    private float timer = 0f;
 
     private Vector3 initialPosition;
     private Vector3 targetPosition;
 
+    private float timer = 0f;
     private float bobbingAmount;
 
     private bool isStepping = false;
@@ -38,7 +41,7 @@ public class CameraWalkEffect : MonoBehaviour
 
     void Update()
     {
-        switch(FPSController.movementState)
+        switch (FPSController.movementState)
         {
             case FirstPersonController.MovementState.WALKING:
                 timer += Time.deltaTime * walkingBobbingSpeed;
