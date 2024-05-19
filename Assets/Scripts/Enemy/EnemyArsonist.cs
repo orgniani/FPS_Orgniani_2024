@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Audio;
 
 public class EnemyArsonist : MonoBehaviour
 {
@@ -11,16 +10,17 @@ public class EnemyArsonist : MonoBehaviour
     [SerializeField] private List<Transform> patrolPoints;
     [SerializeField] private Transform target;
 
-    private AudioSource audioSource;
-    [SerializeField] private AudioClip lightOnFireSound;
-
     [Header("Parameters")]
     [SerializeField] private float maxDistanceToTarget = 5f;
 
-    private bool shouldLightFire = true;
+    [Header("Audio")]
+    [SerializeField] private AudioClip lightOnFireSound;
+    
+    private AudioSource audioSource;
 
     private NavMeshAgent agent;
-
+    
+    private bool shouldLightFire = true;
     private int currentPatrolPointIndex = 0;
 
     public event Action onLightFire = delegate { };

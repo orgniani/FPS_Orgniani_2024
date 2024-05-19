@@ -2,9 +2,11 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
+    [Header("Scene indexes")]
     [SerializeField] private int levelBuildIndex = 1;
     [SerializeField] private int mainMenuBuildIndex = 0;
 
+    [Header("Loading")]
     [SerializeField] private int fakeLoadingTime = 2;
 
     private void Awake()

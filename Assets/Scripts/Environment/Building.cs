@@ -1,19 +1,19 @@
 using System.Collections;
-using System.Security.Cryptography;
 using UnityEngine;
 
 public class Building : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private HandController handController;
-
     [SerializeField] private AnimationCurve curveColor;
-
     [SerializeField] private Material sharedMaterial;
 
+    [Header("Color")]
     [SerializeField] private Color originalColor;
     [SerializeField] private Color pulseColor;
 
+    [Header("Text")]
     [SerializeField] private GameObject instructionsCanvas;
 
     private void Awake()

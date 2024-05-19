@@ -8,9 +8,8 @@ public class InputReader : MonoBehaviour
     [SerializeField] private GunController gun;
     [SerializeField] private FireExtinguisherController fireExtinguisher;
     [SerializeField] private HandController handController;
-    [SerializeField] private MenuManager menuController;
-
     [SerializeField] private AttackSwapController attackSwapController;
+    [SerializeField] private MenuManager menuController;
 
     private void Start()
     {

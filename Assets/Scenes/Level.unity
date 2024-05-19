@@ -12224,6 +12224,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7925705565271500472, guid: e8b0bc1b4f529f74889397e5521c5366,
+        type: 3}
+      propertyPath: movementState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8392242825943415093, guid: e8b0bc1b4f529f74889397e5521c5366,
         type: 3}
       propertyPath: m_TagString
@@ -28100,11 +28105,11 @@ MonoBehaviour:
     m_RotationOrder: 4
   walkingBobbingSpeed: 3
   sprintingBobbingSpeed: 6
-  walkBobbingAmount: 0.5
-  sprintBobbingAmount: 1
+  walkBobbingAmount: 0.3
+  sprintBobbingAmount: 0.5
   smoothTime: 0.1
   stepSound: {fileID: 8300000, guid: d8d04c6f80a1140db85ede568dab1f51, type: 3}
-  soundVolume: 0.2
+  soundVolume: 0.5
 --- !u!82 &2104230380
 AudioSource:
   m_ObjectHideFlags: 0
@@ -28118,7 +28123,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.2
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0

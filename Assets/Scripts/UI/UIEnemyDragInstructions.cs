@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
-
 public class UIEnemyDragInstructions : MonoBehaviour
 {
     [Header("References")]

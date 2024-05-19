@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using UnityEngine;
 
 public class HealthController : MonoBehaviour, IHittable
@@ -8,9 +7,8 @@ public class HealthController : MonoBehaviour, IHittable
     [SerializeField] private ParticleSystem bloodSplashPrefab;
 
     [Header("Parameters")]
-    [SerializeField] private float health =100;
+    [SerializeField] private float health = 100;
     [SerializeField] private float maxHealth = 100;
-
     [SerializeField] private bool shouldDisappearAfterDeath = false;
 
     public event Action onHPChange = delegate { };

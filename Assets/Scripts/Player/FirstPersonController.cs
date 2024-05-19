@@ -10,7 +10,7 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] private float sprintSpeed = 6.0f;
     [SerializeField] private float rotationSpeed = 1.0f;
 
-	[Space(10)]
+    [Header("Player Jump")]
     [SerializeField] private float jumpHeight = 1.2f;
 
 	[Tooltip("The character uses its own gravity value. The engine default is -9.81f")]

@@ -3,9 +3,10 @@ using UnityEngine;
 
 public class FireDeath : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private LayerMask fireFoamLayer;
-
     [SerializeField] private ParticleSystem fireInstance;
+
     private ParticleSystem.MainModule main;
 
     private AudioSource audioSource;
@@ -24,7 +25,6 @@ public class FireDeath : MonoBehaviour
     {
         if ((fireFoamLayer.value & (1 << other.layer)) != 0)
         {
-            //Debug.Log("Collision detected with: " + other.name);
             HandleFireDeath();
         }
     }

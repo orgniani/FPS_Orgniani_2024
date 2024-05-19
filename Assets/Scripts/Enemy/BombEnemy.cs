@@ -10,7 +10,6 @@ public class BombEnemy : MonoBehaviour
     [SerializeField] private HealthController HP;
 
     [SerializeField] private Transform target;
-
     [SerializeField] private LayerMask playerLayer;
 
     [Header("Parameters")]

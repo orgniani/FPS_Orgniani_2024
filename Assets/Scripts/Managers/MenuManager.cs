@@ -14,6 +14,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private string animatorParameterClose = "close";
     [SerializeField] private float screenAnimationDuration = 1.5f;
 
+    [Header("Audio")]
     [SerializeField] private AudioSource openScreenSound;
 
     private bool canPause = true;

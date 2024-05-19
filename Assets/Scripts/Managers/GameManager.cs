@@ -2,17 +2,18 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class GameManager : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private HealthController playerHP;
-    [SerializeField] private List<Enemy> enemies;
-    public List<FlammableObject> flammables;
     [SerializeField] private InputReader inputReader;
 
-    [Header("Sound Effects")]
+    [Header("Lists")]
+    [SerializeField] private List<Enemy> enemies;
+    public List<FlammableObject> flammables;
+
+    [Header("Audio")]
     [SerializeField] private AudioSource winGameSoundEffect;
     [SerializeField] private AudioSource loseGameSoundEffect;
 

@@ -16,16 +16,16 @@ public class PickUpItems : MonoBehaviour
     [Header("Meds Parameters")]
     [SerializeField] private float restoredHP = 10f;
 
-    [Header("Sound")]
+    [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip pickUpItemSound;
 
     [Header("Arrow animation parameters")]
     [SerializeField] private AnimationCurve animationCurve;
     [SerializeField] private GameObject arrow;
-
     [SerializeField] private float animationDuration = 2f;
     [SerializeField] private float posYPosition = 1f;
+
     private Vector3 initialPosition;
 
     public static event Action onPickUp;

@@ -5,17 +5,20 @@ using UnityEngine.AI;
 
 public class HandController : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private FirstPersonController FPSController;
+    [SerializeField] private AudioSource trapGoblinSound;
+
+    [Header("Parameters")]
     [SerializeField] private float proximityRadius = 5f;
     [SerializeField] private float dragSpeed = 2f;
 
-    [SerializeField] private AudioSource trapGoblinSound;
+    [Header("Enemies")]
+    [SerializeField] private List<Transform> knockedOutEnemies;
 
-    public List<Transform> knockedOutEnemies;
     private NavMeshAgent enemyAgent;
 
     private Transform currentlyDraggedEnemy;
-
     private bool drag = false;
     private bool isDraggingEnemy = false;
 

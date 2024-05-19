@@ -6,6 +6,7 @@ public class UITimeCounter : MonoBehaviour
     private float startTime;
     private bool isCounting = false;
 
+    [Header("Text")]
     [SerializeField] private TMP_Text timeText;
 
     private void Start()

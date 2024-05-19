@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -13,12 +12,15 @@ public class Enemy : MonoBehaviour
     [SerializeField] private EnemyPatrol patrol;
     [SerializeField] private EnemyArsonist arsonist;
 
+    [Header("Parameters")]
     [SerializeField] private float passedOutDuration = 10f;
 
-    private AudioSource audioSource;
+    [Header("Audio")]
     [SerializeField] private AudioClip deathSound;
     [SerializeField] private AudioClip wakeUpSound;
 
+    private AudioSource audioSource;
+    
     private NavMeshAgent agent;
     private bool isAwake = false;
 
@@ -31,8 +33,6 @@ public class Enemy : MonoBehaviour
 
     private Coroutine wakeUpCoroutine;
     private Coroutine enableCoroutine;
-
-    //public enum ENEMYSTATE { PATROL = 0, FOLLOW_TARGET, STOP }
 
     private void Start()
     {

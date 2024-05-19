@@ -1,8 +1,5 @@
-using System;
 using System.Collections;
-using System.Security.Cryptography;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
 public class AttackSwapController : MonoBehaviour
 {
@@ -11,21 +8,23 @@ public class AttackSwapController : MonoBehaviour
     [SerializeField] private FireExtinguisherController fireExtinguisherController;
     [SerializeField] private HandController handController;
 
+    [Header("Swap animation parameters")]
     [SerializeField] private AnimationCurve animationCurve;
     [SerializeField] private float animationDuration = 2;
     [SerializeField] private float posYPosition = 2;
 
-    [Header("Weapons GameObjects")]
+    [Header("Weapon objects")]
     [SerializeField] private GameObject gun;
     [SerializeField] private GameObject fireExtinguisher;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip swapSound;
+    private AudioSource audioSource;
+    
     private Vector3 gunInitialPosition;
     private Vector3 extinguisherInitialPosition;
 
     private bool canSwitch = true;
-
-    [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip swapSound;
 
     public bool AquiredExtinguisher { get; set; }
     public bool AquiredGun { get; set; }
@@ -34,6 +33,8 @@ public class AttackSwapController : MonoBehaviour
     {
         gunInitialPosition = gun.transform.localPosition;
         extinguisherInitialPosition = fireExtinguisher.transform.localPosition;
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void SwapToFireExtinguisher()

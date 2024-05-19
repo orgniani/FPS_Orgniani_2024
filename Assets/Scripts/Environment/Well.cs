@@ -1,15 +1,16 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Well : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private HandController handController;
-
     [SerializeField] private ParticleSystem waterParticleSystemPrefab;
 
+    [Header("Audio")]
     [SerializeField] private AudioClip waterSound;
+
     private AudioSource audioSource;
 
     private bool isPlayerClose = false;
@@ -53,7 +54,7 @@ public class Well : MonoBehaviour
         isSplashing = true;
 
         waterParticleSystemPrefab.Play();
-        audioSource.PlayOneShot(waterSound, 1f);
+        audioSource.PlayOneShot(waterSound);
 
         StartCoroutine(ResetSplashState());
     }

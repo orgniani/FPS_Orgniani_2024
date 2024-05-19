@@ -34,7 +34,6 @@ public class GunController : MonoBehaviour
     public float AmmoAmount => ammoAmount;
     public float MaxAmmoAmount => maxAmmoAmount;
 
-
     private void Update()
     {
         if (!enabled) return;

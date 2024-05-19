@@ -1,15 +1,10 @@
-using System.Collections;
 using UnityEngine;
 using TMPro;
 
 public class UIHowToPlayMenu : MonoBehaviour
 {
+    [Header("Text")]
     [SerializeField] private TextMeshProUGUI instructionText;
-    [SerializeField] private AnimationCurve animationCurve;
-    [SerializeField] private float fadeDuration = 1f;
-
-    private Coroutine fadeCoroutine;
-
     [SerializeField] private string[] instructions = new string[]
     {
         "1. Combat the Goblins!\n\nThe forest (and you) are under attack by goblins! Use your tranquilizer gun to make them fall asleep.",
@@ -43,34 +38,6 @@ public class UIHowToPlayMenu : MonoBehaviour
 
     private void UpdateInstructionText()
     {
-        StopFadeCoroutine();
         instructionText.text = instructions[currentInstructionIndex];
-        fadeCoroutine = StartCoroutine(FadeInstructionText());
     }
-
-    private IEnumerator FadeInstructionText()
-    {
-        float elapsedTime = 0f;
-        Color startColor = instructionText.color;
-        Color targetColor = new Color(startColor.r, startColor.g, startColor.b, 0f);
-
-        while (elapsedTime < fadeDuration)
-        {
-            elapsedTime += Time.deltaTime;
-            float valueFrom0To1 = elapsedTime / fadeDuration;
-            float t = animationCurve.Evaluate(valueFrom0To1);
-            instructionText.color = Color.Lerp(startColor, targetColor, t);
-            yield return null;
-        }
-
-        //instructionText.color = targetColor;
-    }
-
-    private void StopFadeCoroutine()
-    {
-        if (fadeCoroutine != null)
-            StopCoroutine(fadeCoroutine);
-    }
-
-
 }

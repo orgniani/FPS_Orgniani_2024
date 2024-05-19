@@ -13,7 +13,6 @@ public class FlammableObject : MonoBehaviour, IFlammable
     [SerializeField] private float fireYOffset;
     [SerializeField] private float fireDamage = 1f;
     [SerializeField] private float recieveDamageCooldown = 1f;
-
     [SerializeField] private float smokeYOffset = 2f;
 
     private bool shouldLoseHealth = true;

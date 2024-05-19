@@ -5,9 +5,11 @@ using UnityEngine.Rendering.Universal;
 
 public class PostProcessingController : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private GameManager gameManager;
     [SerializeField] private Volume globalVolume;
 
+    [Header("Parameters")]
     [SerializeField] private float vignetteMaxIntensity = 0.5f;
 
     [SerializeField] private float vignetteIntensityChangeRate = 0.05f;
@@ -41,11 +43,9 @@ public class PostProcessingController : MonoBehaviour
 
     void UpdateVignetteIntensity()
     {
-        //aberration.intensity.value += intensityChangeRate;
         StartCoroutine(AborrationSlowDecrease());
 
         if (vignette.intensity.value >= vignetteMaxIntensity) return;
-        //vignette.intensity.value += intensityChangeRate;
         StartCoroutine(VignetteSlowDecrease());
     }
 

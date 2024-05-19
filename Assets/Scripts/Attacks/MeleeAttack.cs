@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.Audio;
 
 public class MeleeAttack : MonoBehaviour, IAttack
 {
@@ -17,16 +15,16 @@ public class MeleeAttack : MonoBehaviour, IAttack
 
     [SerializeField] private LayerMask playerLayer;
 
-    private AudioSource audioSource;
+    [Header("Audio")]
     [SerializeField] private AudioClip punchSound;
+
+    private AudioSource audioSource;
 
     private Transform playerTransform;
     private HealthController playerHP;
 
     private bool shouldAttack = true;
-
     private Vector3 hitPoint;
-
     private float occupiedTimeAfterAttack = 1;
 
     public event Action onPunch = delegate { };

@@ -2,7 +2,9 @@
 
 public class FireExtinguisherController : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private ParticleSystem fireFoam;
+
     [SerializeField] private AudioSource extinguishSound;
 
     private bool spray = false;
